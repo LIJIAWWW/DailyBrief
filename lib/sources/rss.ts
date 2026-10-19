@@ -34,7 +34,14 @@ export async function fetchRss(
     const xml = await curlFetch(url, CURL_HEADERS);
     feed = await parser.parseString(xml);
   } else {
-    feed = await parser.parseURL(url);
+    try {
+      feed = await parser.parseURL(url);
+    } catch {
+      // Some public RSS endpoints work with the system TLS stack only.
+      // Keep certificate verification enabled; a failed retry remains non-fatal.
+      const xml = await curlFetch(url, CURL_HEADERS);
+      feed = await parser.parseString(xml);
+    }
   }
 
   return (feed.items ?? [])

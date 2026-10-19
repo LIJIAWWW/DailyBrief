@@ -5,6 +5,7 @@ import path from "node:path";
 
 import { sources, REPORT_LOCALE } from "../lib/sources/registry";
 import { fetchSource } from "../lib/sources/dispatch";
+import { isRecentArticle } from "../lib/sources/freshness";
 import {
   generateDailyReport,
   type ArticleInput,
@@ -31,20 +32,27 @@ import type { TradingSection } from "../lib/ai/pipeline";
 import { todayKey } from "../lib/utils";
 
 const OUTPUT_DIR = "daily_reports";
+const sourceFailures: string[] = [];
 
 async function fetchAll(): Promise<ArticleInput[]> {
   const articles: ArticleInput[] = [];
   const enabled = sources.filter((s) => s.enabled !== false);
-  for (const source of enabled) {
+  let nextSource = 0;
+  await Promise.all(Array.from({ length: Math.min(4, enabled.length) }, async () => {
+  while (nextSource < enabled.length) {
+    const source = enabled[nextSource++];
     try {
-      const items = await fetchSource(source);
+      const items = (await fetchSource(source)).filter(article => isRecentArticle(article));
+      if (items.length === 0) sourceFailures.push(`${source.name} (${REPORT_LOCALE === 'en' ? 'no recent items' : '无近期内容'})`);
       console.log(`  ${source.id.padEnd(20)} ${items.length}`);
       articles.push(...items.map((it) => ({ ...it, source: source.name })));
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
+      sourceFailures.push(source.name);
       console.error(`  ${source.id.padEnd(20)} FAILED — ${msg}`);
     }
   }
+  }));
   return articles;
 }
 
@@ -241,7 +249,8 @@ async function runTrading(): Promise<TradingSection | null> {
 async function main() {
   // Fail fast on misconfigured backend before we spend 30s fetching
   // 500+ articles only to discover the LLM has no credentials.
-  validateBackendCredentials();
+  const useAi = process.env.ENABLE_AI !== "false";
+  if (useAi) validateBackendCredentials();
 
   const date = todayKey();
   console.log(`[daily] ${date} — fetching sources…\n`);
@@ -252,26 +261,35 @@ async function main() {
   }
 
   // Enrich GH Trending, papers, finance news, and politics with summaries.
+  if (useAi) {
   await enrichGhTrending(articles);
   await enrichTrendingPapers(articles);
   await enrichFinanceNews(articles);
   await enrichPolitics(articles);
   await enrichAiNews(articles);
   await enrichXViral(articles);
+  }
 
   // Trading signals: Yahoo fetch + indicators + commentary. Non-fatal —
   // if it errors, we still ship the news digest.
   let trading: TradingSection | null = null;
   try {
-    trading = await runTrading();
+    if (useAi) trading = await runTrading();
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.warn(`[daily] trading section failed: ${msg}`);
   }
 
-  console.log(`[daily] generating digest with ${getModelTag()}…`);
+  console.log(`[daily] generating ${useAi ? getModelTag() : "free RSS"} report…`);
   const t0 = Date.now();
-  const { report } = await generateDailyReport(articles);
+  const report = useAi ? (await generateDailyReport(articles)).report : {
+    hero_headline: REPORT_LOCALE === "en" ? "A fresh view of AI & finance" : "在变化发生时，读懂 AI 与金融。",
+    daily_overview: REPORT_LOCALE === "en" ? "Original headlines and publisher excerpts. No AI-generated summaries." : "聚合 AI 前沿、开源项目与全球财经。当前为免费原文模式，内容保留媒体原文，不生成 AI 摘要。",
+    tech_briefs: [], finance_briefs: [], politics_briefs: [], editor_note: "", keywords: [],
+  } as import("../lib/ai/pipeline").DailyReport;
+  report.generation_mode = useAi ? "ai" : "rss";
+  report.generated_at = new Date().toISOString();
+  report.source_failures = sourceFailures;
   if (trading) report.trading = trading;
   console.log(`[daily] digest ready in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
 

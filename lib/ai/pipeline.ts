@@ -17,6 +17,9 @@ export interface BriefItem {
 }
 
 export interface DailyReport {
+  generation_mode?: "rss" | "ai";
+  generated_at?: string;
+  source_failures?: string[];
   hero_headline: string;
   daily_overview: string;
   tech_briefs: BriefItem[];
