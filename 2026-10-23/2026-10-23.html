@@ -1,0 +1,1263 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="brown">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucy的每日AI看点 · 2026-10-23</title>
+<script>
+try { var pref = JSON.parse(localStorage.getItem('dailybrief-reading') || '{}'); var chosen = new URLSearchParams(location.search).get('theme') || pref.theme; if (chosen === 'blue' || chosen === 'brown') document.documentElement.dataset.theme = chosen; if (pref.size === 'large') document.documentElement.dataset.size = 'large'; if (pref.width === 'wide') document.documentElement.dataset.width = 'wide'; } catch(e) {}
+</script>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --bg-elevated: #ffffff;
+    --fg: #18181b;
+    --fg-soft: #3f3f46;
+    --muted: #71717a;
+    --rule: #e4e4e7;
+    --card: #f4f4f5;
+    --link: #1d4ed8;
+    --accent: #18181b;
+    --accent-fg: #fafaf9;
+    --rank-high-bg: #fee2e2;
+    --rank-high-fg: #991b1b;
+    --rank-mid-bg: #fef3c7;
+    --rank-mid-fg: #92400e;
+    --rank-low-bg: #e0e7ff;
+    --rank-low-fg: #3730a3;
+    --hero-grad-from: #fafaf9;
+    --hero-grad-to: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #18181b;
+      --fg: #fafafa;
+      --fg-soft: #d4d4d8;
+      --muted: #a1a1aa;
+      --rule: #27272a;
+      --card: #18181b;
+      --link: #93c5fd;
+      --accent: #fafafa;
+      --accent-fg: #0a0a0a;
+      --rank-high-bg: rgba(239,68,68,0.18);
+      --rank-high-fg: #fca5a5;
+      --rank-mid-bg: rgba(245,158,11,0.18);
+      --rank-mid-fg: #fcd34d;
+      --rank-low-bg: rgba(99,102,241,0.18);
+      --rank-low-fg: #a5b4fc;
+      --hero-grad-from: #18181b;
+      --hero-grad-to: #0a0a0a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ===== header ===== */
+  header.report-header { margin-bottom: 1.25rem; }
+  .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  h1.report-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.4rem 0 1.2rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .archive-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--rule);
+    padding-bottom: 1px;
+  }
+  .archive-link:hover { color: var(--accent); border-bottom-style: solid; }
+  .hero-card {
+    background: linear-gradient(135deg, var(--hero-grad-from) 0%, var(--hero-grad-to) 100%);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.4rem;
+    border-radius: 0.6rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .hero-headline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.35rem 0 0;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+  .overview-card {
+    margin: 0.7rem 0 0;
+    padding: 0.7rem 1.1rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--muted);
+  }
+  .overview-card .eyebrow { display: block; margin-bottom: 0.3rem; }
+  .overview-text {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--fg-soft);
+  }
+
+  /* ===== primary tabs ===== */
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin: 1.25rem 0 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .tab {
+    background: none;
+    border: none;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab.active {
+    color: var(--fg);
+    border-bottom-color: var(--accent);
+  }
+  .tab .count {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ===== digest (AI 简报) — compact ===== */
+  .digest-category { margin-bottom: 1.1rem; }
+  .category-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .category-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+  .category-count {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--card);
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+  }
+  .brief-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  @media (min-width: 720px) {
+    .brief-list { grid-template-columns: 1fr 1fr; }
+  }
+  .brief {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.95rem;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .brief:hover {
+    border-color: var(--muted);
+    transform: translateY(-1px);
+  }
+  .brief-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .brief-source {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .brief-rank {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .brief-rank.high { background: var(--rank-high-bg); color: var(--rank-high-fg); }
+  .brief-rank.mid  { background: var(--rank-mid-bg);  color: var(--rank-mid-fg); }
+  .brief-rank.low  { background: var(--rank-low-bg);  color: var(--rank-low-fg); }
+  .brief-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+    line-height: 1.35;
+  }
+  .brief-title a { color: var(--fg); text-decoration: none; }
+  .brief-title a:hover { color: var(--link); text-decoration: underline; }
+  .brief-summary {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .editor-card {
+    background: var(--card);
+    border-left: 3px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 1rem 1.3rem;
+    margin: 1.5rem 0 1.2rem;
+  }
+  .editor-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .editor-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.5rem; }
+  .keyword {
+    background: var(--card);
+    color: var(--fg-soft);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+
+  /* ===== L2 sub-tabs ===== */
+  .sub-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+  .sub-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1.05rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .sub-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .sub-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .sub-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .sub-content { display: none; }
+  .sub-content.active { display: block; }
+
+  /* ===== L3 source-tabs ===== */
+  .source-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.9rem 0 1.3rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .source-tab {
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.83rem;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .source-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .source-tab.active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .source-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.3rem;
+  }
+  .source-content { display: none; }
+  .source-content.active { display: block; }
+
+  /* ===== article cards in raw panels ===== */
+  .article {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .article:first-child { padding-top: 0; }
+  .article:last-child { border-bottom: none; }
+  .article-title {
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .article-title a { color: var(--fg); text-decoration: none; }
+  .article-title a:hover { color: var(--link); text-decoration: underline; }
+  .article-meta { color: var(--muted); font-size: 0.76rem; margin: 0 0 0.35rem; }
+  .article-stats {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.4rem;
+    font-feature-settings: "tnum";
+  }
+  .article-excerpt {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .article-summary {
+    margin: 0.55rem 0 0;
+    padding: 0.6rem 0.85rem;
+    background: var(--card);
+    border-left: 2px solid var(--link);
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+  .summary-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    color: var(--link);
+    margin-right: 0.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  /* ===== trading panel ===== */
+  .crypto-widgets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem;
+    margin: 0.4rem 0 1.2rem;
+  }
+  @media (min-width: 720px) {
+    .crypto-widgets { grid-template-columns: repeat(4, 1fr); }
+  }
+  .crypto-widget {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.85rem;
+    text-align: center;
+  }
+  .widget-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .widget-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .widget-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .widget-sub.positive { color: #16a34a; }
+  .widget-sub.negative { color: #dc2626; }
+  @media (prefers-color-scheme: dark) {
+    .widget-sub.positive { color: #4ade80; }
+    .widget-sub.negative { color: #fca5a5; }
+  }
+  .crypto-widget.fg-fear-extreme { border-left: 4px solid #b91c1c; }
+  .crypto-widget.fg-fear-extreme .widget-value { color: #b91c1c; }
+  .crypto-widget.fg-fear { border-left: 4px solid #d97706; }
+  .crypto-widget.fg-fear .widget-value { color: #d97706; }
+  .crypto-widget.fg-neutral { border-left: 4px solid var(--muted); }
+  .crypto-widget.fg-greed { border-left: 4px solid #65a30d; }
+  .crypto-widget.fg-greed .widget-value { color: #65a30d; }
+  .crypto-widget.fg-greed-extreme { border-left: 4px solid #16a34a; }
+  .crypto-widget.fg-greed-extreme .widget-value { color: #16a34a; }
+  @media (prefers-color-scheme: dark) {
+    .crypto-widget.fg-fear-extreme .widget-value,
+    .crypto-widget.fg-fear .widget-value { color: #fca5a5; }
+    .crypto-widget.fg-greed .widget-value,
+    .crypto-widget.fg-greed-extreme .widget-value { color: #4ade80; }
+  }
+
+  .trading-overview-card {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.3rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--accent);
+  }
+  .trading-overview-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .trading-overview-text { font-size: 0.92rem; line-height: 1.75; color: var(--fg-soft); margin: 0; }
+
+  .trading-section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--fg);
+    letter-spacing: 0.05em;
+  }
+
+  /* picks (Sonnet's watchlist) */
+  .trading-picks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  @media (min-width: 720px) {
+    .trading-picks { grid-template-columns: 1fr 1fr; }
+  }
+  .trading-pick {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+  .trading-pick.stance-bull { border-left-color: #16a34a; }
+  .trading-pick.stance-bear { border-left-color: #dc2626; }
+  .trading-pick.stance-neutral { border-left-color: var(--muted); }
+  .pick-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.45rem;
+  }
+  .pick-symbol-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pick-symbol { font-weight: 700; font-size: 1rem; color: var(--fg); }
+  .pick-name { color: var(--muted); font-size: 0.82rem; }
+  .pick-stance {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pick-stance-bull { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .pick-stance-bear { background: rgba(220,38,38,0.12); color: #dc2626; }
+  .pick-stance-neutral { background: var(--card); color: var(--muted); }
+  .pick-rationale { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--fg-soft); }
+
+  /* asset-group tabs */
+  .trading-group-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.6rem 0 1.2rem;
+  }
+  .trading-group-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .trading-group-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .trading-group-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .trading-group-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .trading-group-content { display: none; }
+  .trading-group-content.active { display: block; }
+
+  /* ticker cards */
+  .ticker-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.55rem;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .ticker-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+  }
+  .ticker-id { min-width: 0; }
+  .ticker-symbol { margin: 0; font-size: 1rem; font-weight: 700; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
+  .ticker-name { margin: 0.15rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .ticker-price-block { text-align: right; flex-shrink: 0; }
+  .ticker-price { display: block; font-size: 1.05rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ticker-pct { display: inline-block; font-size: 0.82rem; font-weight: 500; margin-top: 0.15rem; font-variant-numeric: tabular-nums; }
+  .ticker-pct.positive, .positive { color: #16a34a; }
+  .ticker-pct.negative, .negative { color: #dc2626; }
+
+  .ticker-indicators {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem 0.9rem;
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--fg-soft);
+  }
+  @media (min-width: 720px) {
+    .ticker-indicators { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ticker-indicators > div { display: flex; gap: 0.4rem; align-items: baseline; min-width: 0; }
+  .ticker-indicators dt { color: var(--muted); font-size: 0.74rem; margin: 0; white-space: nowrap; }
+  .ticker-indicators dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; color: var(--fg); }
+  .trend-bullish { color: #16a34a; }
+  .trend-bearish { color: #dc2626; }
+  .trend-neutral { color: var(--muted); }
+  .rsi-overbought { color: #d97706; }
+  .rsi-oversold { color: #2563eb; }
+
+  .ticker-signals {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+    border-top: 1px dashed var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .signal-pill {
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .signal-pill.tone-bull { background: rgba(22,163,74,0.13); color: #166534; }
+  .signal-pill.tone-bear { background: rgba(220,38,38,0.13); color: #991b1b; }
+  .signal-pill.tone-caution { background: rgba(217,119,6,0.15); color: #92400e; }
+  @media (prefers-color-scheme: dark) {
+    .signal-pill.tone-bull { color: #4ade80; }
+    .signal-pill.tone-bear { color: #fca5a5; }
+    .signal-pill.tone-caution { color: #fcd34d; }
+    .trend-bullish, .positive, .ticker-pct.positive { color: #4ade80; }
+    .trend-bearish, .negative, .ticker-pct.negative { color: #fca5a5; }
+    .rsi-overbought { color: #fcd34d; }
+    .rsi-oversold { color: #93c5fd; }
+    .trading-pick.stance-bull { border-left-color: #4ade80; }
+    .trading-pick.stance-bear { border-left-color: #fca5a5; }
+    .pick-stance-bull { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .pick-stance-bear { background: rgba(252,165,165,0.15); color: #fca5a5; }
+  }
+  .signal-age { opacity: 0.7; font-weight: 400; }
+
+  .trading-risk {
+    margin: 1.5rem 0 0;
+    padding: 0.9rem 1.2rem;
+    background: var(--card);
+    border-radius: 0.45rem;
+    border-left: 3px solid #d97706;
+  }
+  .trading-risk .eyebrow { display: block; margin-bottom: 0.35rem; }
+  .trading-risk p { margin: 0; font-size: 0.82rem; line-height: 1.65; color: var(--fg-soft); }
+
+  footer {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  /* Personal reading edition. Both palettes keep strong text contrast. */
+  :root, :root[data-theme="blue"] {
+    color-scheme: light; --bg:#eef3f8; --bg-elevated:#fff; --fg:#17304b; --fg-soft:#43576c;
+    --muted:#60748a; --rule:#d9e3ed; --card:#f0f5fa; --link:#245da1; --accent:#285e9d;
+    --accent-fg:#fff; --hero-grad-from:#e0ebf7; --hero-grad-to:#f7faff; --hero-ink:#1b426e;
+    --serif:Georgia,"Noto Serif SC","Songti SC",SimSun,serif;
+  }
+  :root[data-theme="brown"] {
+    --bg:#f2ede5; --bg-elevated:#fffdf8; --fg:#423329; --fg-soft:#685747; --muted:#7c6b5b;
+    --rule:#e2d8c9; --card:#f4ede3; --link:#8a5938; --accent:#896040; --accent-fg:#fffdf8;
+    --hero-grad-from:#e9decd; --hero-grad-to:#faf6ef; --hero-ink:#684a32;
+  }
+  html { font-size:16px; }
+  html[data-size="large"] { font-size:18px; }
+  main { max-width:1120px; padding:28px 40px 48px; }
+  html[data-width="wide"] main { max-width:1400px; }
+  a,button,input,select { -webkit-tap-highlight-color:transparent; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible { outline:3px solid var(--link); outline-offset:4px; }
+  [hidden] { display:none!important; }
+  .report-header { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:0 0 24px; border-bottom:1px solid var(--rule); }
+  .brand { display:flex; align-items:center; gap:12px; color:var(--fg); text-decoration:none; font-size:1.05rem; font-weight:700; white-space:nowrap; }
+  .brand-mark { display:grid; place-items:center; width:40px; height:44px; color:var(--accent-fg); background:var(--accent); border-radius:3px 10px 3px 3px; font-family:var(--serif); font-size:1.5rem; }
+  .brand small { display:block; color:var(--muted); font-size:.57rem; letter-spacing:.13em; margin-top:3px; font-weight:500; }
+  .header-actions { display:flex; gap:24px; align-items:center; }
+  .archive-link { margin:0; border:none; font-size:.78rem; }
+  .theme-switch { display:flex; gap:3px; padding:4px; border:1px solid var(--rule); border-radius:7px; }
+  .theme-switch button { display:flex; align-items:center; gap:7px; background:transparent; border:0; color:var(--muted); font:inherit; font-size:.73rem; padding:7px 10px; cursor:pointer; border-radius:4px; }
+  .theme-switch button[aria-pressed="true"] { background:var(--bg-elevated); color:var(--fg); box-shadow:0 1px 4px #00000009; }
+  .swatch { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .swatch.blue { background:#285e9d; }.swatch.brown { background:#896040; }
+  .edition-hero { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:32px; padding:40px 0 32px; border-bottom:1px solid var(--rule); }
+  .edition-kicker { color:var(--accent); letter-spacing:.17em; font-size:.63rem; font-weight:700; margin:0 0 14px; }
+  .edition-kicker span { color:var(--muted); font-weight:400; letter-spacing:.08em; }
+  .edition-hero h1 { font-family:var(--serif); font-size:3.8rem; line-height:1.15; letter-spacing:-.045em; margin:0 0 14px; font-weight:600; }
+  .edition-hero h1>span { color:var(--accent); }
+  .edition-subtitle { margin:0 0 20px; color:var(--fg-soft); font-size:1rem; letter-spacing:.09em; }
+  .edition-meta { display:flex; align-items:center; gap:7px; color:var(--muted); font-size:.68rem; flex-wrap:wrap; }
+  .status-dot { width:6px; height:6px; background:var(--accent); display:inline-block; border-radius:50%; }
+  .edition-side { align-self:center; padding-left:32px; border-left:1px solid var(--rule); }
+  .edition-stats { display:flex; justify-content:space-between; gap:28px; }
+  .edition-stats strong { display:block; font-family:var(--serif); color:var(--hero-ink); font-weight:400; font-size:2.5rem; line-height:1.2; }
+  .edition-stats span { color:var(--muted); font-size:.68rem; }
+  .edition-side p { margin:18px 0 0; border-top:1px solid var(--rule); padding-top:14px; }
+  .edition-side p>span { display:block; color:var(--muted); font-size:.64rem; }
+  .edition-side b { display:block; color:var(--fg-soft); font-size:.69rem; font-weight:500; margin-top:5px; }
+  .reading-tools { display:flex; align-items:center; justify-content:space-between; gap:20px; margin:23px 0 16px; }
+  .search-wrap { display:flex; align-items:center; gap:10px; width:350px; max-width:65%; padding:9px 13px; border:1px solid var(--rule); background:var(--bg-elevated); border-radius:5px; }
+  .search-wrap>span { color:var(--muted); font-size:1.3rem; line-height:1; }
+  .search-wrap input { background:transparent; border:0; width:100%; color:var(--fg); font:inherit; font-size:.75rem; min-width:0; }
+  input::placeholder { color:var(--muted); }
+  .reading-settings { position:relative; font-size:.72rem; color:var(--muted); }
+  .reading-settings summary { cursor:pointer; list-style:none; white-space:nowrap; }
+  .reading-settings>div { position:absolute; right:0; top:30px; width:230px; z-index:5; padding:16px; border:1px solid var(--rule); border-radius:8px; background:var(--bg-elevated); box-shadow:0 8px 28px #0000000c; }
+  .reading-settings label { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px; }
+  .reading-settings label:last-child { margin-bottom:0; }
+  .reading-settings select { font:inherit; color:var(--fg); background:var(--card); border:1px solid var(--rule); padding:4px 7px; border-radius:3px; }
+  .tabs { gap:24px; border-bottom:1px solid var(--rule); margin:10px 0 0; }
+  .tab { padding:11px 0 13px; font-size:.95rem; font-weight:600; }
+  .tab.active { color:var(--accent); border-bottom:3px solid var(--accent); }
+  .tab .count { background:var(--card); padding:2px 6px; border-radius:4px; font-size:.64rem; }
+  .panel { padding:20px 26px 10px; background:var(--bg-elevated); border:1px solid var(--rule); border-top:0; border-radius:0 0 7px 7px; }
+  .sub-tabs { margin:0 0 8px; gap:8px; }
+  .sub-tab { font-size:.73rem; border-radius:4px; padding:7px 12px; }
+  .sub-tab.active,.source-tab.active { background:var(--accent); color:var(--accent-fg); border-color:var(--accent); }
+  .sub-tab.active .count,.source-tab.active .count { color:var(--accent-fg); opacity:.8; }
+  .article { padding:22px 0; border-bottom:1px solid var(--rule); }
+  .article:last-child { border-bottom:0; }
+  .article-title { font-size:1.04rem; line-height:1.6; font-weight:600; letter-spacing:-.01em; margin:0 0 8px; }
+  .article-title a { color:var(--fg); }
+  .article-meta,.article-stats { color:var(--muted); font-size:.67rem; margin:0 0 9px; }
+  .article-excerpt { color:var(--fg-soft); font-size:.84rem; line-height:1.85; margin:0; max-width:92ch; }
+  .article-summary { background:var(--card); border-left:2px solid var(--accent); font-size:.84rem; }
+  .summary-label { color:var(--accent); }
+  .source-warning { font-size:.7rem; color:var(--muted); margin-top:14px; }
+  .source-warning summary { cursor:pointer; }
+  .no-matches { padding:16px; border:1px solid var(--rule); background:var(--bg-elevated); color:var(--muted); font-size:.85rem; }
+  body.searching .sub-tabs,body.searching .source-tabs,body.searching .tabs { display:none; }
+  body.searching .panel,body.searching .sub-content,body.searching .source-content { display:block; }
+  body.searching .panel { border-top:1px solid var(--rule); }
+  body.searching .empty { display:none; }
+  footer { margin-top:28px; display:grid; grid-template-columns:1fr auto; gap:4px 20px; font-size:.64rem; }
+  footer p { margin:0; }footer p:last-child { grid-column:2; }
+  .footer-brand { grid-row:1/3; font-size:.6rem; font-weight:700; color:var(--fg); letter-spacing:.08em; }
+  .footer-brand>span { color:var(--muted); margin:0 7px; }
+  @media(max-width:700px) {
+    main { padding:20px 18px 32px; }.report-header { align-items:flex-start; gap:15px; }.brand { font-size:.9rem; gap:8px; }.brand-mark { width:32px; height:38px; }.brand small { font-size:.45rem; }.header-actions { gap:7px; flex-direction:column-reverse; align-items:flex-end; }.theme-switch button { padding:5px 6px; font-size:.6rem; }.archive-link { font-size:.66rem; }
+    .edition-hero { grid-template-columns:1fr; gap:22px; padding:28px 0 24px; }.edition-hero h1 { font-size:3rem; }.edition-side { border-left:0; padding-left:0; display:flex; gap:26px; justify-content:space-between; }.edition-stats { gap:28px; }.edition-stats strong { font-size:1.9rem; }.edition-side p { margin:0; border-top:0; padding-top:3px; }.edition-subtitle { font-size:.86rem; }.edition-meta { font-size:.61rem; }
+    .panel { padding:18px 16px 8px; }.article-title { font-size:.96rem; }.article-excerpt { font-size:.8rem; }.search-wrap { width:65%; }.reading-tools { gap:10px; }.tabs { gap:24px; }footer { display:block; }footer p { margin-top:7px; }
+  }
+
+@media(max-width:520px) { .report-header { flex-wrap:wrap; } .header-actions { width:100%; flex-direction:row; justify-content:space-between; align-items:center; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="report-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">L</span><span>Lucy的每日AI看点<small>AI & FINANCE / DAILY EDITION</small></span></a>
+    <div class="header-actions">
+      <a class="archive-link" href="../archive.html">历史归档 ↗</a>
+      <div class="theme-switch" aria-label="阅读设置"><button type="button" data-theme-choice="blue" aria-pressed="true"><i class="swatch blue"></i>雾海蓝</button><button type="button" data-theme-choice="brown" aria-pressed="false"><i class="swatch brown"></i>燕麦棕</button></div>
+    </div>
+  </header>
+  <section class="edition-hero">
+    <div class="hero-copy"><p class="edition-kicker">DAILY INTELLIGENCE <span> / 2026.10.23</span></p><h1>今日简报<span>.</span></h1><p class="edition-subtitle">把注意力，留给值得读的事。</p><div class="edition-meta"><span class="status-dot"></span>免费原文聚合<span> / 生成于 10/23 11:54</span></div></div>
+    <div class="edition-side"><div class="edition-stats"><div><strong>56</strong><span>本期文章</span></div><div><strong>10</strong><span>内容来源</span></div></div><p><span>更新计划</span><b>北京时间 · 每日 08:00 起生成</b></p></div>
+  </section>
+  <details class="source-warning"><summary>部分来源本次未能获取：1</summary><p>Smol AI News (无近期内容)</p></details>
+  <div class="reading-tools"><label class="search-wrap"><span aria-hidden="true">⌕</span><input id="news-search" type="search" placeholder="搜索本期新闻…" aria-label="搜索新闻"></label><details class="reading-settings"><summary>阅读设置 ⚙</summary><div><label>字号<select id="font-size"><option value="standard">标准</option><option value="large">大字</option></select></label><label>阅读宽度<select id="reading-width"><option value="narrow">舒适</option><option value="wide">宽屏</option></select></label></div></details></div>
+  <p class="no-matches" hidden>本期没有匹配的文章，请换个关键词。</p>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="tech">AI 前沿<span class="count">44</span></button>
+    
+    
+    <button class="tab" data-tab="finance">金融新闻<span class="count">12</span></button>
+    
+  </nav>
+
+  <section class="panel active" data-panel="tech">
+    <nav class="sub-tabs"><button class="sub-tab active" data-sub="ai-news" data-cat="tech">AI 媒体<span class="count">15</span></button><button class="sub-tab" data-sub="github-trending" data-cat="tech">GitHub Trending<span class="count">9</span></button><button class="sub-tab" data-sub="trending-papers" data-cat="tech">热门论文<span class="count">20</span></button></nav>
+<div class="sub-contents"><div class="sub-content active" data-sub-content="ai-news" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="ai-news" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/blog/microsoft/thinkingbox-training" target="_blank" rel="noopener noreferrer">Turning Database Grading into RL Rewards: Post-Training Agents with ThinkingBox</a></h3>
+  
+  <p class="article-meta">Hugging Face Blog · 10/23 06:24</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/10/22/1146109/designing-an-ai-serving-harness-built-to-last/" target="_blank" rel="noopener noreferrer">Designing an AI serving harness built to last</a></h3>
+  
+  <p class="article-meta">MIT Tech Review AI · 10/23 05:17</p>
+  <p class="article-excerpt">The next competitive advantage in enterprise AI has less to do with which model you choose than with what you build around it. That’s an important shift. For the past several years, much of the AI conversation has centered on model capability: bigger models, better reasoning, larger context windows,</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://openai.com/index/decisions-api" target="_blank" rel="noopener noreferrer">Build more responsive apps with the Decisions API</a></h3>
+  
+  <p class="article-meta">OpenAI News · 10/23 03:00</p>
+  <p class="article-excerpt">Fast, focused, low-cost decisions for any application.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/10/22/1146103/the-foundations-of-scalable-ai/" target="_blank" rel="noopener noreferrer">The Foundations of Scalable AI</a></h3>
+  
+  <p class="article-meta">MIT Tech Review AI · 10/23 02:48</p>
+  <p class="article-excerpt">A scalable AI system requires a strong foundation. Data, engineering, platforms, operating models, and governance must converge to work as one. This session from MIT Technology Review’s EmTech Future conference explores what it takes to build that foundation in a highly regulated environment and how</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.latent.space/p/modal-d" target="_blank" rel="noopener noreferrer">Why AI Compute Comes in Rectangles — Erik Bernhardsson, Modal CEO</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/23 01:40</p>
+  <p class="article-excerpt">Elastic GPUs, sandbox growth, and the economics of the agent cloud</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/blog/allenai/olmoearth-v1-3" target="_blank" rel="noopener noreferrer">OlmoEarth v1.3: State-of-the-art embeddings for the whole planet</a></h3>
+  
+  <p class="article-meta">Hugging Face Blog · 10/23 00:11</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/" target="_blank" rel="noopener noreferrer">Beyond tree cover: mapping the world’s forest types</a></h3>
+  
+  <p class="article-meta">DeepMind Blog · 10/22 22:30</p>
+  <p class="article-excerpt">A global map categorizing every 10-meter patch of land on Earth into distinct forest types.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.latent.space/p/moshi" target="_blank" rel="noopener noreferrer">You are the Team  — Anekha Sokhal, Moshi</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/22 22:03</p>
+  <p class="article-excerpt">How Moshi turns market data into actionable insights, and why AI tools have to fit the trader’s workflow.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/10/22/1146812/making-the-case-for-context-aware-ai/" target="_blank" rel="noopener noreferrer">Making the case for context-aware AI</a></h3>
+  
+  <p class="article-meta">MIT Tech Review AI · 10/22 18:00</p>
+  <p class="article-excerpt">Enterprise AI can generate recommendations, automate tasks, and help organizations make decisions faster. But without an understanding of how a business actually operates, even powerful models can miss the constraints and relationships that determine whether a decision is the right one. As companies</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/10/22/1146948/ais-hidden-storage-bill-what-inference-leaves-behind/" target="_blank" rel="noopener noreferrer">AI’s hidden storage bill: What inference leaves behind</a></h3>
+  
+  <p class="article-meta">MIT Tech Review AI · 10/22 16:41</p>
+  <p class="article-excerpt">Ask most executives to picture the cost of AI and they’ll likely see GPUs—racks of accelerators with gigawatts of power—and a waitlist for silicon. But that picture leaves something out: Data storage costs. What happens to data after a model responds? Much of the back-end data that’s generated—from </p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/blog/ibm-research/granite-timeseries-ensemble-r1" target="_blank" rel="noopener noreferrer">Ensemble forecasting with IBM Granite time-series models</a></h3>
+  
+  <p class="article-meta">Hugging Face Blog · 10/22 15:51</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.latent.space/p/ainews-openais-patch-the-planet-program" target="_blank" rel="noopener noreferrer">[AINews] OpenAI’s Patch the Planet program is 1 of 2 parties to discover PHP2Shell vulnerabilities in core PHP affecting 70% of the web, using GPT-5.6 Sol; coordinated response over 2 months</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/22 15:42</p>
+  <p class="article-excerpt">The Big Hardening begins</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/504841.html" target="_blank" rel="noopener noreferrer">特斯拉利润腰斩，一夜跌没“通用汽车”！马斯克：FSD在中国也会遥遥领先</a></h3>
+  
+  <p class="article-meta">量子位 · 10/22 15:14</p>
+  <p class="article-excerpt">FSD一年增长70万付费用户</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/504832.html" target="_blank" rel="noopener noreferrer">既能“做选择题”，也能“做填空题”——星辰意图理解模型Xing4.0-29B-Intent发布</a></h3>
+  
+  <p class="article-meta">量子位 · 10/22 15:11</p>
+  <p class="article-excerpt">中电信人工智能科技有限公司星辰通用人工智能实验室正式发布并开源意图理解专用模型 Xing4.0-29B-Intent</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/504800.html" target="_blank" rel="noopener noreferrer">谁在给OpenAI供应具身数据？</a></h3>
+  
+  <p class="article-meta">量子位 · 10/22 15:05</p>
+  <p class="article-excerpt">挤进全球Physical AI核心供应链</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="github-trending" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="github-trending" data-sub="github-trending" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://github.com/php/php-src" target="_blank" rel="noopener noreferrer">php/php-src</a></h3>
+  <p class="article-stats">C · ★ 41,243 · 🍴 8,322 · 📈 287 stars today</p>
+  
+  <p class="article-excerpt">The PHP Interpreter</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener noreferrer">anthropics/knowledge-work-plugins</a></h3>
+  <p class="article-stats">Python · ★ 31,710 · 🍴 3,541 · 📈 303 stars today</p>
+  
+  <p class="article-excerpt">Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener noreferrer">DietrichGebert/ponytail</a></h3>
+  <p class="article-stats">JavaScript · ★ 173,747 · 🍴 9,462 · 📈 1,948 stars today</p>
+  
+  <p class="article-excerpt">Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener noreferrer">cloudflare/security-audit-skill</a></h3>
+  <p class="article-stats">JavaScript · ★ 39,838 · 🍴 2,485 · 📈 2,979 stars today</p>
+  
+  <p class="article-excerpt">A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/Graphify-Labs/graphify" target="_blank" rel="noopener noreferrer">Graphify-Labs/graphify</a></h3>
+  <p class="article-stats">Python · ★ 133,130 · 🍴 12,733 · 📈 1,408 stars today</p>
+  
+  <p class="article-excerpt">Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">supabase/supabase</a></h3>
+  <p class="article-stats">TypeScript · ★ 113,546 · 🍴 17,009 · 📈 693 stars today</p>
+  
+  <p class="article-excerpt">The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI applications.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/fastapi/fastapi" target="_blank" rel="noopener noreferrer">fastapi/fastapi</a></h3>
+  <p class="article-stats">Python · ★ 103,852 · 🍴 10,093 · 📈 101 stars today</p>
+  
+  <p class="article-excerpt">FastAPI framework, high performance, easy to learn, fast to code, ready for production</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/luongnv89/claude-howto" target="_blank" rel="noopener noreferrer">luongnv89/claude-howto</a></h3>
+  <p class="article-stats">Python · ★ 43,383 · 🍴 5,401 · 📈 177 stars today</p>
+  
+  <p class="article-excerpt">A visual, example-driven guide to Claude Code — from basic concepts to advanced agents, with copy-paste templates that bring immediate value.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/Meloong-Git/PCL" target="_blank" rel="noopener noreferrer">Meloong-Git/PCL</a></h3>
+  <p class="article-stats">Visual Basic .NET · ★ 8,751 · 🍴 1,209 · 📈 119 stars today</p>
+  
+  <p class="article-excerpt">Minecraft 启动器 Plain Craft Launcher（PCL）。</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="trending-papers" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="huggingface-papers" data-sub="trending-papers" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.26659" target="_blank" rel="noopener noreferrer">SpatialScout: Can VLM Agents Actively Explore and Map 3D Scenes?</a></h3>
+  <p class="article-stats">👍 131</p>
+  <p class="article-meta">10/19 08:00</p>
+  <p class="article-excerpt">Spatial intelligence requires agents to actively acquire visual evidence and integrate observations into a coherent representation of the three-dimensional world. Yet spatial question answering offers limited evidence of whether models can construct accurate metric maps through autonomous exploratio</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28698" target="_blank" rel="noopener noreferrer">Scaling in Games: Continued Pre-Training For Embodied Agents In Diverse Virtual Worlds</a></h3>
+  <p class="article-stats">👍 53</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">Scaling data, diversity and model capacity has improved embodied learning in physical environments, where diverse experiences remain grounded in shared physical laws. Whether these gains extend to virtual worlds with different visual styles, dynamics, controls, and objectives remains unclear. We inv</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.29722" target="_blank" rel="noopener noreferrer">Retrieval Augmented Generation Compositionality</a></h3>
+  <p class="article-stats">👍 28</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Retrieval Augmented Generation (RAG) grounds large language models in external knowledge. Modern pipelines combine embedding, chunking, retrieval, reranking, query augmentation, context compression, and agentic verification, yet these techniques are typically evaluated one at a time. It remains uncl</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30926" target="_blank" rel="noopener noreferrer">Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation</a></h3>
+  <p class="article-stats">👍 23</p>
+  <p class="article-meta">10/22 16:43</p>
+  <p class="article-excerpt">Cinematic video generation requires both temporal inference from limited inputs (i.e., sparse rather than frame-by-frame guidance) and factor-aware control of character, scene, action, and camera. Multimodal large language models (MLLMs) offer useful priors for both capabilities, but their represent</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30113" target="_blank" rel="noopener noreferrer">Quant-Arena: Benchmarking LLM Agents for Quantitative Trading Research</a></h3>
+  <p class="article-stats">👍 21</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Quantitative research is an iterative loop: a researcher proposes a market hypothesis, implements it as an executable signal, tests it on historical data, and decides what to keep. Existing benchmarks score formulas, code, or individual trading decisions, leaving open whether large language models (</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30181" target="_blank" rel="noopener noreferrer">Deep Search in Real-World Web Environments</a></h3>
+  <p class="article-stats">👍 19</p>
+  <p class="article-meta">10/19 08:00</p>
+  <p class="article-excerpt">Despite substantial progress in Deep Search agents, their ability to conduct end-to-end research in real-world open Web environments remains insufficiently evaluated. Unlike static retrieval settings, information on the real-world Web is distributed across diverse sources, modalities, and heterogene</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.29545" target="_blank" rel="noopener noreferrer">PACE: Periodic and Channel-Aligned Encoding of Four-Bit Recurrent States</a></h3>
+  <p class="article-stats">👍 19</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Linear-attention language models keep their context in a recurrent state of fixed size, where an inference system stores one copy of this state for every sequence it decodes at the same time. Storing the state at lower precision therefore lets more sequences share an accelerator. Existing state quan</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.27598" target="_blank" rel="noopener noreferrer">Meta Expert: Cross-Layer Expert Sharing for Storage- and Retrieval-Efficient MoE</a></h3>
+  <p class="article-stats">👍 18</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">As model parameters scale up, sparsely activated Mixture-of-Experts (MoE) approaches have become essential for model scaling. However, mainstream models currently adopt hierarchical architectures, where experts in different layers, although topologically independent, exhibit substantial similarity a</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30108" target="_blank" rel="noopener noreferrer">Multimodal Embodied Agents: A Unified Capability-centric Perspective from Computer-Use to Robot-Use</a></h3>
+  <p class="article-stats">👍 18</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Multimodal agents (MMAs) sustain interaction through reasoning, memory, tools, and feedback, most visibly as computer-use agents, while robotic systems (RSs) couple sensing and actuation under physical dynamics. We define multimodal embodied agents (MMEAs) as goal-directed systems that couple multim</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28416" target="_blank" rel="noopener noreferrer">Code2Video-Compass: A Comprehensive Benchmark for General-Purpose Code-Based Video Generation across T2V, I2V, and V2V</a></h3>
+  <p class="article-stats">👍 14</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">Code-based video generation offers fine-grained control, targeted editing, and component reuse compared with direct video generation. This approach requires multimodal large language models (MLLMs) to translate visual and temporal requirements into executable programs that produce complete videos. H</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28763" target="_blank" rel="noopener noreferrer">Automating ML for Science: Can Frontier Agents Climb Scientific Hills in the Wild?</a></h3>
+  <p class="article-stats">👍 13</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">Frontier coding agents are increasingly framed as end-to-end automated researchers, and ML for science offers a demanding test of that promise: improving a scientific model often requires domain insight beyond routine ML engineering. We introduce Agent4Sci, a long-horizon testbed for measuring how f</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.29560" target="_blank" rel="noopener noreferrer">From VLM Planners to Robotic Agents: Self-Evolving Harnesses for History-Dependent Manipulation</a></h3>
+  <p class="article-stats">👍 11</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Vision-language-action (VLA) models achieve strong performance across embodied manipulation tasks by unifying visual understanding, language conditioning, and action generation. However, long-horizon tasks can involve non-Markovian dependencies: successful decisions may require retaining task progre</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30128" target="_blank" rel="noopener noreferrer">Think Harder Where It Matters: Item-Level Adaptive Recursion for Sequential Recommendation</a></h3>
+  <p class="article-stats">👍 11</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Existing sequential recommenders usually allocate a fixed computational budget to every item in a user&#39;s interaction history, regardless of the item&#39;s contribution to the final prediction. We challenge this de facto design with two diagnostic findings. (1) Non-uniform computational need: items withi</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28679" target="_blank" rel="noopener noreferrer">VerifierBench: Benchmarking the Generation of Executable Verifiers for LLM Agents</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/19 08:00</p>
+  <p class="article-excerpt">Agents need reliable ways to validate their outputs, both when completing tasks and when filtering synthetic training data. We study verifier generation: from the instruction and environment available for solving a task, an agent writes an executable verifier that must accept every valid solution an</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28905" target="_blank" rel="noopener noreferrer">Hidden Messages Between Diffusion Language Model Agents: Causal Evidence for Latent Communication</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">Diffusion language models form answers through a sequence of revisable continuous states, but multi-agent systems usually discard those states and make agents communicate only after decoding text. We ask whether one independent diffusion trajectory can pass a compact hidden message into another and,</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.29934" target="_blank" rel="noopener noreferrer">ToM2Vec: Continuous Theory-of-Mind Tokens for Multi-Agent Coordination</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">Forming an accurate theory-of-mind (ToM) is key to successful multi-agent collaboration and requires reasoning under uncertainty to capture multiple possible partner states. This is hard to do in the text representation space native to large language model (LLM) agents, which more easily describe a </p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.30755" target="_blank" rel="noopener noreferrer">Is Complex Agentic Memory Always Needed? Naive RAG Is Stronger Than We Thought</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/22 08:00</p>
+  <p class="article-excerpt">LLM memory is widely used in long-term conversation understanding. Agentic memory systems often use mutation, structural organization, learned retrieval strategies, or other complex operations. Is this complexity always necessary? We study Raw-RAG, a naive RAG baseline using dense retrieval and rera</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.31158" target="_blank" rel="noopener noreferrer">Beyond Watching and Searching: Benchmarking Agents for Video-centered Deep Research Reports</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/22 08:00</p>
+  <p class="article-excerpt">Deep research agents synthesize open-web evidence into long reports, but current benchmarks do not evaluate research centered on a source video. We introduce Video-Centered Deep Research Report Generation. Given a video and user request, an agent identifies research questions, retrieves external mul</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.27851" target="_blank" rel="noopener noreferrer">LaLa-World: Scaling Latent World Models with Natural Language Actions</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/21 08:00</p>
+  <p class="article-excerpt">This paper shows that JEPA-style latent world models (LWMs) can learn across diverse domains and data sources by adopting the language-conditioned interface of video generation models. We establish this approach as an effective and efficient basis for planning with imagination and downstream policy </p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.28909" target="_blank" rel="noopener noreferrer">DiffResearch: Accelerating Deep Research with Diffusion Language Models</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/20 08:00</p>
+  <p class="article-excerpt">Deep research systems iteratively plan, gather evidence, synthesize, and revise, making end-to-end latency a key bottleneck for interactive use. Almost all production systems are built on autoregressive (AR) language models and inherit left-to-right decoding in planning and long-form writing. We pre</p>
+  
+</article>
+  </div>
+    </div>
+  </div></div>
+  </section>
+  
+  <section class="panel" data-panel="politics">
+    <p class="empty">该分类今日无内容。</p>
+  </section>
+  <section class="panel" data-panel="finance">
+    <div class="sub-content active" data-sub-content="news" data-cat="finance">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="news" data-cat="finance">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-10-23/bloomberg-tech-asia-data-centers-10-23-2026-video" target="_blank" rel="noopener noreferrer">Are AI Data Centers Overvalued?</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 11:39</p>
+  <p class="article-excerpt">Investors are growing more critical of AI investments, especially data centers. But while neocloud stocks are under pressure, many believe the demand for computing resources remains strong -- and investment needs to happen now. In this episode of Bloomberg Tech: Asia, Annabelle Droulers and Shery Ah</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/palm-oil-fluctuates-as-market-faces-dueling-supply-outlooks" target="_blank" rel="noopener noreferrer">Palm Oil Fluctuates as Market Faces Dueling Supply Outlooks</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 11:33</p>
+  <p class="article-excerpt">Palm oil futures traded near steady in Kuala Lumpur, after fluctuating between gains and losses.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/rupee-rally-faces-limits-from-india-s-oil-and-dollar-problem" target="_blank" rel="noopener noreferrer">Rupee Rally Faces Limits From India’s Oil and Dollar Problem</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 11:23</p>
+  <p class="article-excerpt">The Indian rupee’s sharp rebound from near a record low is set to lose steam as high oil prices and persistent dollar demand limit the scope for further gains.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/23/sk-hynix-solidigm-ipo-.html" target="_blank" rel="noopener noreferrer">SK Hynix shares pare losses in choppy trade as chipmaker halts Solidigm IPO review</a></h3>
+  
+  <p class="article-meta">CNBC · 10/23 11:18</p>
+  <p class="article-excerpt">SK Hynix shares pare losses in choppy trade following halted review of Solidigm IPO plans in the U.S.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/copper-heads-for-weekly-loss-as-ai-selloff-hurts-risk-appetite" target="_blank" rel="noopener noreferrer">Copper Heads for Weekly Loss as AI Selloff Hurts Risk Appetite</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 11:00</p>
+  <p class="article-excerpt">Copper headed for a third weekly loss in four as a selloff in technology stocks deepened, sapping risk appetite across markets including for the metal that’s used in data centers and power infrastructure.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/newsletters/2026-10-23/india-retail-traders-cut-back-on-leveraged-bets-as-stocks-slide" target="_blank" rel="noopener noreferrer">India Retail Traders Cut Back on Leveraged Bets as Stocks Slide</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 10:34</p>
+  <p class="article-excerpt">Zerodha founder Nithin Kamath has repeatedly voiced concerns about the use of margin loans by clients to buy stocks.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/hsbc-standard-chartered-face-cost-test-as-rates-wealth-support-earnings" target="_blank" rel="noopener noreferrer">HSBC, Standard Chartered Face Cost Test as Rates, Wealth Support Earnings</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 10:19</p>
+  <p class="article-excerpt">HSBC Holdings Plc and Standard Chartered Plc are expected to sustain strong returns on higher rates and Asian wealth fees, though China’s tighter capital-flow rules and cost pressures cloud the outlook.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/china-stocks-sink-deeper-into-bear-market-despite-state-buying" target="_blank" rel="noopener noreferrer">China Stocks Sink Further as State Buying Offers Little Relief</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 10:13</p>
+  <p class="article-excerpt">Chinese stocks slid deeper into a bear market as rescue efforts by state-backed funds fail to rebuild investor confidence.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/23/wealthy-chinese-tax-offshore-trusts-capital-control-.html" target="_blank" rel="noopener noreferrer">Wealthy Chinese move offshore money to U.S. banks as Beijing’s tax net widens</a></h3>
+  
+  <p class="article-meta">CNBC · 10/23 09:23</p>
+  <p class="article-excerpt">Bankers and lawyers say Chinese clients&#39; demand for U.S. bank accounts has gathered pace as Beijing tightens the screws on Chinese offshore wealth.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-23/yen-hits-one-month-high-as-us-tech-rout-revives-haven-appeal" target="_blank" rel="noopener noreferrer">Japanese Bonds Rally as Global Tech Rout Fuels Haven Demand</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/23 09:15</p>
+  <p class="article-excerpt">Japanese government bonds extended their recent gains on Friday as a deepening global selloff in technology stocks drove investors into traditional haven assets.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/23/japan-inflation-september-highest-in-2026.html" target="_blank" rel="noopener noreferrer">Japan core inflation in September surges to its highest this year at 2.1%</a></h3>
+  
+  <p class="article-meta">CNBC · 10/23 08:55</p>
+  <p class="article-excerpt">Core inflation, which strips out prices of fresh food, was in line with the 2.1% forecast by economists polled by Reuters.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/22/spacex-records-561-million-investment-gain-from-stake-in-boring-co.html" target="_blank" rel="noopener noreferrer">SpaceX records $561 million investment gain from stake in Elon Musk&#39;s Boring Co.</a></h3>
+  
+  <p class="article-meta">CNBC · 10/23 08:46</p>
+  <p class="article-excerpt">SpaceX&#39;s stake in Boring Co. helped boost its net income in the third quarter.</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+  </section>
+  
+
+  <footer>
+    <span class="footer-brand">DAILY BRIEF <span>/</span> AI & FINANCE</span><p>内容来自原媒体，点击标题阅读原文。</p><p>原文聚合 · 摘录由原媒体提供 · 2026-10-23</p>
+  </footer>
+</main>
+<script>
+  function saveReading() {
+    try { localStorage.setItem('dailybrief-reading', JSON.stringify({theme:document.documentElement.dataset.theme, size:document.documentElement.dataset.size || 'standard', width:document.documentElement.dataset.width || 'narrow'})); } catch(e) {}
+  }
+  function syncThemeButtons() {
+    document.querySelectorAll('[data-theme-choice]').forEach(function(b) { b.setAttribute('aria-pressed', String(b.dataset.themeChoice === document.documentElement.dataset.theme)); });
+  }
+  syncThemeButtons();
+  document.querySelectorAll('[data-theme-choice]').forEach(function(b) { b.addEventListener('click',function(){ document.documentElement.dataset.theme=b.dataset.themeChoice; syncThemeButtons(); saveReading(); }); });
+  [['font-size','size','standard'],['reading-width','width','narrow']].forEach(function(pair) { var select=document.getElementById(pair[0]); select.value=document.documentElement.dataset[pair[1]] || pair[2]; select.addEventListener('change',function(){document.documentElement.dataset[pair[1]]=select.value;saveReading();}); });
+  document.getElementById('news-search').addEventListener('input',function(e) {
+    var query=e.target.value.trim().toLocaleLowerCase(); document.body.classList.toggle('searching',!!query); var matches=0;
+    document.querySelectorAll('.article').forEach(function(article){ var match=!query || article.textContent.toLocaleLowerCase().includes(query);article.hidden=!match;if(match)matches++; });
+    document.querySelectorAll('.panel').forEach(function(panel){panel.hidden=!!query && !Array.from(panel.querySelectorAll('.article')).some(function(article){return !article.hidden;});});
+    document.querySelector('.no-matches').hidden=!query || matches>0;
+  });
+
+  document.querySelectorAll('.tabs > .tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.dataset.tab;
+      document.querySelectorAll('.tabs > .tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.panel').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.panel === target);
+      });
+    });
+  });
+  // Scope sub-tab / source-tab toggles to the parent .panel so two L1 panels
+  // can share the same data-cat (e.g. tech main + community both data-cat=tech)
+  // without stomping on each other's active state.
+  document.querySelectorAll('.sub-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = btn.closest('.panel');
+      if (!panel) return;
+      var sub = btn.dataset.sub;
+      panel.querySelectorAll('.sub-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      panel.querySelectorAll('.sub-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.subContent === sub);
+      });
+    });
+  });
+  document.querySelectorAll('.source-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var subContent = btn.closest('.sub-content');
+      if (!subContent) return;
+      var src = btn.dataset.source;
+      subContent.querySelectorAll('.source-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      subContent.querySelectorAll('.source-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.sourceContent === src);
+      });
+    });
+  });
+  // Trading panel: asset-group sub-tabs (US/crypto/china/commodity)
+  document.querySelectorAll('.trading-group-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var grp = btn.dataset.group;
+      document.querySelectorAll('.trading-group-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.trading-group-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.group === grp);
+      });
+    });
+  });
+</script>
+</body>
+</html>
