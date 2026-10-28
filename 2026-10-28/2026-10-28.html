@@ -1,0 +1,1277 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="brown">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucy的每日AI看点 · 2026-10-28</title>
+<script>
+try { var pref = JSON.parse(localStorage.getItem('dailybrief-reading') || '{}'); var chosen = new URLSearchParams(location.search).get('theme') || pref.theme; if (chosen === 'blue' || chosen === 'brown') document.documentElement.dataset.theme = chosen; if (pref.size === 'large') document.documentElement.dataset.size = 'large'; if (pref.width === 'wide') document.documentElement.dataset.width = 'wide'; } catch(e) {}
+</script>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --bg-elevated: #ffffff;
+    --fg: #18181b;
+    --fg-soft: #3f3f46;
+    --muted: #71717a;
+    --rule: #e4e4e7;
+    --card: #f4f4f5;
+    --link: #1d4ed8;
+    --accent: #18181b;
+    --accent-fg: #fafaf9;
+    --rank-high-bg: #fee2e2;
+    --rank-high-fg: #991b1b;
+    --rank-mid-bg: #fef3c7;
+    --rank-mid-fg: #92400e;
+    --rank-low-bg: #e0e7ff;
+    --rank-low-fg: #3730a3;
+    --hero-grad-from: #fafaf9;
+    --hero-grad-to: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #18181b;
+      --fg: #fafafa;
+      --fg-soft: #d4d4d8;
+      --muted: #a1a1aa;
+      --rule: #27272a;
+      --card: #18181b;
+      --link: #93c5fd;
+      --accent: #fafafa;
+      --accent-fg: #0a0a0a;
+      --rank-high-bg: rgba(239,68,68,0.18);
+      --rank-high-fg: #fca5a5;
+      --rank-mid-bg: rgba(245,158,11,0.18);
+      --rank-mid-fg: #fcd34d;
+      --rank-low-bg: rgba(99,102,241,0.18);
+      --rank-low-fg: #a5b4fc;
+      --hero-grad-from: #18181b;
+      --hero-grad-to: #0a0a0a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ===== header ===== */
+  header.report-header { margin-bottom: 1.25rem; }
+  .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  h1.report-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.4rem 0 1.2rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .archive-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--rule);
+    padding-bottom: 1px;
+  }
+  .archive-link:hover { color: var(--accent); border-bottom-style: solid; }
+  .hero-card {
+    background: linear-gradient(135deg, var(--hero-grad-from) 0%, var(--hero-grad-to) 100%);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.4rem;
+    border-radius: 0.6rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .hero-headline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.35rem 0 0;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+  .overview-card {
+    margin: 0.7rem 0 0;
+    padding: 0.7rem 1.1rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--muted);
+  }
+  .overview-card .eyebrow { display: block; margin-bottom: 0.3rem; }
+  .overview-text {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--fg-soft);
+  }
+
+  /* ===== primary tabs ===== */
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin: 1.25rem 0 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .tab {
+    background: none;
+    border: none;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab.active {
+    color: var(--fg);
+    border-bottom-color: var(--accent);
+  }
+  .tab .count {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ===== digest (AI 简报) — compact ===== */
+  .digest-category { margin-bottom: 1.1rem; }
+  .category-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .category-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+  .category-count {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--card);
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+  }
+  .brief-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  @media (min-width: 720px) {
+    .brief-list { grid-template-columns: 1fr 1fr; }
+  }
+  .brief {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.95rem;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .brief:hover {
+    border-color: var(--muted);
+    transform: translateY(-1px);
+  }
+  .brief-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .brief-source {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .brief-rank {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .brief-rank.high { background: var(--rank-high-bg); color: var(--rank-high-fg); }
+  .brief-rank.mid  { background: var(--rank-mid-bg);  color: var(--rank-mid-fg); }
+  .brief-rank.low  { background: var(--rank-low-bg);  color: var(--rank-low-fg); }
+  .brief-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+    line-height: 1.35;
+  }
+  .brief-title a { color: var(--fg); text-decoration: none; }
+  .brief-title a:hover { color: var(--link); text-decoration: underline; }
+  .brief-summary {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .editor-card {
+    background: var(--card);
+    border-left: 3px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 1rem 1.3rem;
+    margin: 1.5rem 0 1.2rem;
+  }
+  .editor-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .editor-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.5rem; }
+  .keyword {
+    background: var(--card);
+    color: var(--fg-soft);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+
+  /* ===== L2 sub-tabs ===== */
+  .sub-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+  .sub-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1.05rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .sub-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .sub-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .sub-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .sub-content { display: none; }
+  .sub-content.active { display: block; }
+
+  /* ===== L3 source-tabs ===== */
+  .source-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.9rem 0 1.3rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .source-tab {
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.83rem;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .source-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .source-tab.active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .source-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.3rem;
+  }
+  .source-content { display: none; }
+  .source-content.active { display: block; }
+
+  /* ===== article cards in raw panels ===== */
+  .article {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .article:first-child { padding-top: 0; }
+  .article:last-child { border-bottom: none; }
+  .article-title {
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .article-title a { color: var(--fg); text-decoration: none; }
+  .article-title a:hover { color: var(--link); text-decoration: underline; }
+  .article-meta { color: var(--muted); font-size: 0.76rem; margin: 0 0 0.35rem; }
+  .article-stats {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.4rem;
+    font-feature-settings: "tnum";
+  }
+  .article-excerpt {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .article-summary {
+    margin: 0.55rem 0 0;
+    padding: 0.6rem 0.85rem;
+    background: var(--card);
+    border-left: 2px solid var(--link);
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+  .summary-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    color: var(--link);
+    margin-right: 0.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  /* ===== trading panel ===== */
+  .crypto-widgets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem;
+    margin: 0.4rem 0 1.2rem;
+  }
+  @media (min-width: 720px) {
+    .crypto-widgets { grid-template-columns: repeat(4, 1fr); }
+  }
+  .crypto-widget {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.85rem;
+    text-align: center;
+  }
+  .widget-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .widget-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .widget-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .widget-sub.positive { color: #16a34a; }
+  .widget-sub.negative { color: #dc2626; }
+  @media (prefers-color-scheme: dark) {
+    .widget-sub.positive { color: #4ade80; }
+    .widget-sub.negative { color: #fca5a5; }
+  }
+  .crypto-widget.fg-fear-extreme { border-left: 4px solid #b91c1c; }
+  .crypto-widget.fg-fear-extreme .widget-value { color: #b91c1c; }
+  .crypto-widget.fg-fear { border-left: 4px solid #d97706; }
+  .crypto-widget.fg-fear .widget-value { color: #d97706; }
+  .crypto-widget.fg-neutral { border-left: 4px solid var(--muted); }
+  .crypto-widget.fg-greed { border-left: 4px solid #65a30d; }
+  .crypto-widget.fg-greed .widget-value { color: #65a30d; }
+  .crypto-widget.fg-greed-extreme { border-left: 4px solid #16a34a; }
+  .crypto-widget.fg-greed-extreme .widget-value { color: #16a34a; }
+  @media (prefers-color-scheme: dark) {
+    .crypto-widget.fg-fear-extreme .widget-value,
+    .crypto-widget.fg-fear .widget-value { color: #fca5a5; }
+    .crypto-widget.fg-greed .widget-value,
+    .crypto-widget.fg-greed-extreme .widget-value { color: #4ade80; }
+  }
+
+  .trading-overview-card {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.3rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--accent);
+  }
+  .trading-overview-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .trading-overview-text { font-size: 0.92rem; line-height: 1.75; color: var(--fg-soft); margin: 0; }
+
+  .trading-section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--fg);
+    letter-spacing: 0.05em;
+  }
+
+  /* picks (Sonnet's watchlist) */
+  .trading-picks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  @media (min-width: 720px) {
+    .trading-picks { grid-template-columns: 1fr 1fr; }
+  }
+  .trading-pick {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+  .trading-pick.stance-bull { border-left-color: #16a34a; }
+  .trading-pick.stance-bear { border-left-color: #dc2626; }
+  .trading-pick.stance-neutral { border-left-color: var(--muted); }
+  .pick-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.45rem;
+  }
+  .pick-symbol-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pick-symbol { font-weight: 700; font-size: 1rem; color: var(--fg); }
+  .pick-name { color: var(--muted); font-size: 0.82rem; }
+  .pick-stance {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pick-stance-bull { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .pick-stance-bear { background: rgba(220,38,38,0.12); color: #dc2626; }
+  .pick-stance-neutral { background: var(--card); color: var(--muted); }
+  .pick-rationale { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--fg-soft); }
+
+  /* asset-group tabs */
+  .trading-group-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.6rem 0 1.2rem;
+  }
+  .trading-group-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .trading-group-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .trading-group-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .trading-group-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .trading-group-content { display: none; }
+  .trading-group-content.active { display: block; }
+
+  /* ticker cards */
+  .ticker-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.55rem;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .ticker-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+  }
+  .ticker-id { min-width: 0; }
+  .ticker-symbol { margin: 0; font-size: 1rem; font-weight: 700; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
+  .ticker-name { margin: 0.15rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .ticker-price-block { text-align: right; flex-shrink: 0; }
+  .ticker-price { display: block; font-size: 1.05rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ticker-pct { display: inline-block; font-size: 0.82rem; font-weight: 500; margin-top: 0.15rem; font-variant-numeric: tabular-nums; }
+  .ticker-pct.positive, .positive { color: #16a34a; }
+  .ticker-pct.negative, .negative { color: #dc2626; }
+
+  .ticker-indicators {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem 0.9rem;
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--fg-soft);
+  }
+  @media (min-width: 720px) {
+    .ticker-indicators { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ticker-indicators > div { display: flex; gap: 0.4rem; align-items: baseline; min-width: 0; }
+  .ticker-indicators dt { color: var(--muted); font-size: 0.74rem; margin: 0; white-space: nowrap; }
+  .ticker-indicators dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; color: var(--fg); }
+  .trend-bullish { color: #16a34a; }
+  .trend-bearish { color: #dc2626; }
+  .trend-neutral { color: var(--muted); }
+  .rsi-overbought { color: #d97706; }
+  .rsi-oversold { color: #2563eb; }
+
+  .ticker-signals {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+    border-top: 1px dashed var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .signal-pill {
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .signal-pill.tone-bull { background: rgba(22,163,74,0.13); color: #166534; }
+  .signal-pill.tone-bear { background: rgba(220,38,38,0.13); color: #991b1b; }
+  .signal-pill.tone-caution { background: rgba(217,119,6,0.15); color: #92400e; }
+  @media (prefers-color-scheme: dark) {
+    .signal-pill.tone-bull { color: #4ade80; }
+    .signal-pill.tone-bear { color: #fca5a5; }
+    .signal-pill.tone-caution { color: #fcd34d; }
+    .trend-bullish, .positive, .ticker-pct.positive { color: #4ade80; }
+    .trend-bearish, .negative, .ticker-pct.negative { color: #fca5a5; }
+    .rsi-overbought { color: #fcd34d; }
+    .rsi-oversold { color: #93c5fd; }
+    .trading-pick.stance-bull { border-left-color: #4ade80; }
+    .trading-pick.stance-bear { border-left-color: #fca5a5; }
+    .pick-stance-bull { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .pick-stance-bear { background: rgba(252,165,165,0.15); color: #fca5a5; }
+  }
+  .signal-age { opacity: 0.7; font-weight: 400; }
+
+  .trading-risk {
+    margin: 1.5rem 0 0;
+    padding: 0.9rem 1.2rem;
+    background: var(--card);
+    border-radius: 0.45rem;
+    border-left: 3px solid #d97706;
+  }
+  .trading-risk .eyebrow { display: block; margin-bottom: 0.35rem; }
+  .trading-risk p { margin: 0; font-size: 0.82rem; line-height: 1.65; color: var(--fg-soft); }
+
+  footer {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  /* Personal reading edition. Both palettes keep strong text contrast. */
+  :root, :root[data-theme="blue"] {
+    color-scheme: light; --bg:#eef3f8; --bg-elevated:#fff; --fg:#17304b; --fg-soft:#43576c;
+    --muted:#60748a; --rule:#d9e3ed; --card:#f0f5fa; --link:#245da1; --accent:#285e9d;
+    --accent-fg:#fff; --hero-grad-from:#e0ebf7; --hero-grad-to:#f7faff; --hero-ink:#1b426e;
+    --serif:Georgia,"Noto Serif SC","Songti SC",SimSun,serif;
+  }
+  :root[data-theme="brown"] {
+    --bg:#f2ede5; --bg-elevated:#fffdf8; --fg:#423329; --fg-soft:#685747; --muted:#7c6b5b;
+    --rule:#e2d8c9; --card:#f4ede3; --link:#8a5938; --accent:#896040; --accent-fg:#fffdf8;
+    --hero-grad-from:#e9decd; --hero-grad-to:#faf6ef; --hero-ink:#684a32;
+  }
+  html { font-size:16px; }
+  html[data-size="large"] { font-size:18px; }
+  main { max-width:1120px; padding:28px 40px 48px; }
+  html[data-width="wide"] main { max-width:1400px; }
+  a,button,input,select { -webkit-tap-highlight-color:transparent; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible { outline:3px solid var(--link); outline-offset:4px; }
+  [hidden] { display:none!important; }
+  .report-header { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:0 0 24px; border-bottom:1px solid var(--rule); }
+  .brand { display:flex; align-items:center; gap:12px; color:var(--fg); text-decoration:none; font-size:1.05rem; font-weight:700; white-space:nowrap; }
+  .brand-mark { display:grid; place-items:center; width:40px; height:44px; color:var(--accent-fg); background:var(--accent); border-radius:3px 10px 3px 3px; font-family:var(--serif); font-size:1.5rem; }
+  .brand small { display:block; color:var(--muted); font-size:.57rem; letter-spacing:.13em; margin-top:3px; font-weight:500; }
+  .header-actions { display:flex; gap:24px; align-items:center; }
+  .archive-link { margin:0; border:none; font-size:.78rem; }
+  .theme-switch { display:flex; gap:3px; padding:4px; border:1px solid var(--rule); border-radius:7px; }
+  .theme-switch button { display:flex; align-items:center; gap:7px; background:transparent; border:0; color:var(--muted); font:inherit; font-size:.73rem; padding:7px 10px; cursor:pointer; border-radius:4px; }
+  .theme-switch button[aria-pressed="true"] { background:var(--bg-elevated); color:var(--fg); box-shadow:0 1px 4px #00000009; }
+  .swatch { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .swatch.blue { background:#285e9d; }.swatch.brown { background:#896040; }
+  .edition-hero { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:32px; padding:40px 0 32px; border-bottom:1px solid var(--rule); }
+  .edition-kicker { color:var(--accent); letter-spacing:.17em; font-size:.63rem; font-weight:700; margin:0 0 14px; }
+  .edition-kicker span { color:var(--muted); font-weight:400; letter-spacing:.08em; }
+  .edition-hero h1 { font-family:var(--serif); font-size:3.8rem; line-height:1.15; letter-spacing:-.045em; margin:0 0 14px; font-weight:600; }
+  .edition-hero h1>span { color:var(--accent); }
+  .edition-subtitle { margin:0 0 20px; color:var(--fg-soft); font-size:1rem; letter-spacing:.09em; }
+  .edition-meta { display:flex; align-items:center; gap:7px; color:var(--muted); font-size:.68rem; flex-wrap:wrap; }
+  .status-dot { width:6px; height:6px; background:var(--accent); display:inline-block; border-radius:50%; }
+  .edition-side { align-self:center; padding-left:32px; border-left:1px solid var(--rule); }
+  .edition-stats { display:flex; justify-content:space-between; gap:28px; }
+  .edition-stats strong { display:block; font-family:var(--serif); color:var(--hero-ink); font-weight:400; font-size:2.5rem; line-height:1.2; }
+  .edition-stats span { color:var(--muted); font-size:.68rem; }
+  .edition-side p { margin:18px 0 0; border-top:1px solid var(--rule); padding-top:14px; }
+  .edition-side p>span { display:block; color:var(--muted); font-size:.64rem; }
+  .edition-side b { display:block; color:var(--fg-soft); font-size:.69rem; font-weight:500; margin-top:5px; }
+  .reading-tools { display:flex; align-items:center; justify-content:space-between; gap:20px; margin:23px 0 16px; }
+  .search-wrap { display:flex; align-items:center; gap:10px; width:350px; max-width:65%; padding:9px 13px; border:1px solid var(--rule); background:var(--bg-elevated); border-radius:5px; }
+  .search-wrap>span { color:var(--muted); font-size:1.3rem; line-height:1; }
+  .search-wrap input { background:transparent; border:0; width:100%; color:var(--fg); font:inherit; font-size:.75rem; min-width:0; }
+  input::placeholder { color:var(--muted); }
+  .reading-settings { position:relative; font-size:.72rem; color:var(--muted); }
+  .reading-settings summary { cursor:pointer; list-style:none; white-space:nowrap; }
+  .reading-settings>div { position:absolute; right:0; top:30px; width:230px; z-index:5; padding:16px; border:1px solid var(--rule); border-radius:8px; background:var(--bg-elevated); box-shadow:0 8px 28px #0000000c; }
+  .reading-settings label { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px; }
+  .reading-settings label:last-child { margin-bottom:0; }
+  .reading-settings select { font:inherit; color:var(--fg); background:var(--card); border:1px solid var(--rule); padding:4px 7px; border-radius:3px; }
+  .tabs { gap:24px; border-bottom:1px solid var(--rule); margin:10px 0 0; }
+  .tab { padding:11px 0 13px; font-size:.95rem; font-weight:600; }
+  .tab.active { color:var(--accent); border-bottom:3px solid var(--accent); }
+  .tab .count { background:var(--card); padding:2px 6px; border-radius:4px; font-size:.64rem; }
+  .panel { padding:20px 26px 10px; background:var(--bg-elevated); border:1px solid var(--rule); border-top:0; border-radius:0 0 7px 7px; }
+  .sub-tabs { margin:0 0 8px; gap:8px; }
+  .sub-tab { font-size:.73rem; border-radius:4px; padding:7px 12px; }
+  .sub-tab.active,.source-tab.active { background:var(--accent); color:var(--accent-fg); border-color:var(--accent); }
+  .sub-tab.active .count,.source-tab.active .count { color:var(--accent-fg); opacity:.8; }
+  .article { padding:22px 0; border-bottom:1px solid var(--rule); }
+  .article:last-child { border-bottom:0; }
+  .article-title { font-size:1.04rem; line-height:1.6; font-weight:600; letter-spacing:-.01em; margin:0 0 8px; }
+  .article-title a { color:var(--fg); }
+  .article-meta,.article-stats { color:var(--muted); font-size:.67rem; margin:0 0 9px; }
+  .article-excerpt { color:var(--fg-soft); font-size:.84rem; line-height:1.85; margin:0; max-width:92ch; }
+  .article-summary { background:var(--card); border-left:2px solid var(--accent); font-size:.84rem; }
+  .summary-label { color:var(--accent); }
+  .source-warning { font-size:.7rem; color:var(--muted); margin-top:14px; }
+  .source-warning summary { cursor:pointer; }
+  .no-matches { padding:16px; border:1px solid var(--rule); background:var(--bg-elevated); color:var(--muted); font-size:.85rem; }
+  body.searching .sub-tabs,body.searching .source-tabs,body.searching .tabs { display:none; }
+  body.searching .panel,body.searching .sub-content,body.searching .source-content { display:block; }
+  body.searching .panel { border-top:1px solid var(--rule); }
+  body.searching .empty { display:none; }
+  footer { margin-top:28px; display:grid; grid-template-columns:1fr auto; gap:4px 20px; font-size:.64rem; }
+  footer p { margin:0; }footer p:last-child { grid-column:2; }
+  .footer-brand { grid-row:1/3; font-size:.6rem; font-weight:700; color:var(--fg); letter-spacing:.08em; }
+  .footer-brand>span { color:var(--muted); margin:0 7px; }
+  @media(max-width:700px) {
+    main { padding:20px 18px 32px; }.report-header { align-items:flex-start; gap:15px; }.brand { font-size:.9rem; gap:8px; }.brand-mark { width:32px; height:38px; }.brand small { font-size:.45rem; }.header-actions { gap:7px; flex-direction:column-reverse; align-items:flex-end; }.theme-switch button { padding:5px 6px; font-size:.6rem; }.archive-link { font-size:.66rem; }
+    .edition-hero { grid-template-columns:1fr; gap:22px; padding:28px 0 24px; }.edition-hero h1 { font-size:3rem; }.edition-side { border-left:0; padding-left:0; display:flex; gap:26px; justify-content:space-between; }.edition-stats { gap:28px; }.edition-stats strong { font-size:1.9rem; }.edition-side p { margin:0; border-top:0; padding-top:3px; }.edition-subtitle { font-size:.86rem; }.edition-meta { font-size:.61rem; }
+    .panel { padding:18px 16px 8px; }.article-title { font-size:.96rem; }.article-excerpt { font-size:.8rem; }.search-wrap { width:65%; }.reading-tools { gap:10px; }.tabs { gap:24px; }footer { display:block; }footer p { margin-top:7px; }
+  }
+
+@media(max-width:520px) { .report-header { flex-wrap:wrap; } .header-actions { width:100%; flex-direction:row; justify-content:space-between; align-items:center; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="report-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">L</span><span>Lucy的每日AI看点<small>AI & FINANCE / DAILY EDITION</small></span></a>
+    <div class="header-actions">
+      <a class="archive-link" href="../archive.html">历史归档 ↗</a>
+      <div class="theme-switch" aria-label="阅读设置"><button type="button" data-theme-choice="blue" aria-pressed="true"><i class="swatch blue"></i>雾海蓝</button><button type="button" data-theme-choice="brown" aria-pressed="false"><i class="swatch brown"></i>燕麦棕</button></div>
+    </div>
+  </header>
+  <section class="edition-hero">
+    <div class="hero-copy"><p class="edition-kicker">DAILY INTELLIGENCE <span> / 2026.10.28</span></p><h1>今日简报<span>.</span></h1><p class="edition-subtitle">把注意力，留给值得读的事。</p><div class="edition-meta"><span class="status-dot"></span>免费原文聚合<span> / 生成于 10/28 12:42</span></div></div>
+    <div class="edition-side"><div class="edition-stats"><div><strong>58</strong><span>本期文章</span></div><div><strong>12</strong><span>内容来源</span></div></div><p><span>更新计划</span><b>北京时间 · 每日 08:00 起生成</b></p></div>
+  </section>
+  <details class="source-warning"><summary>部分来源本次未能获取：1</summary><p>Smol AI News (无近期内容)</p></details>
+  <div class="reading-tools"><label class="search-wrap"><span aria-hidden="true">⌕</span><input id="news-search" type="search" placeholder="搜索本期新闻…" aria-label="搜索新闻"></label><details class="reading-settings"><summary>阅读设置 ⚙</summary><div><label>字号<select id="font-size"><option value="standard">标准</option><option value="large">大字</option></select></label><label>阅读宽度<select id="reading-width"><option value="narrow">舒适</option><option value="wide">宽屏</option></select></label></div></details></div>
+  <p class="no-matches" hidden>本期没有匹配的文章，请换个关键词。</p>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="tech">AI 前沿<span class="count">46</span></button>
+    
+    
+    <button class="tab" data-tab="finance">金融新闻<span class="count">12</span></button>
+    
+  </nav>
+
+  <section class="panel active" data-panel="tech">
+    <nav class="sub-tabs"><button class="sub-tab active" data-sub="ai-news" data-cat="tech">AI 媒体<span class="count">15</span></button><button class="sub-tab" data-sub="github-trending" data-cat="tech">GitHub Trending<span class="count">11</span></button><button class="sub-tab" data-sub="trending-papers" data-cat="tech">热门论文<span class="count">20</span></button></nav>
+<div class="sub-contents"><div class="sub-content active" data-sub-content="ai-news" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="ai-news" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://latent.space/p/opus55/" target="_blank" rel="noopener noreferrer">How Anthropic ships Claude with Claude: Separating the Brain from the Hands</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/28 02:53</p>
+  <p class="article-excerpt">Katelyn Lesse and Angela Jiang on Opus 5.5, the Claude Platform, and the engineering behind AI agents.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://latent.space/p/how_anthropic_ships_the_1_llm_in_the_world_safely_separating_the_brain_from_the_hands/" target="_blank" rel="noopener noreferrer">How Anthropic ships the #1 LLM in the World safely: Separating the Brain from the Hands</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/28 02:40</p>
+  <p class="article-excerpt">Katelyn Lesse and Angela Jiang join Latent Space to explain the engineering behind the Claude Platform: launching Opus 5.5, separating the model’s “brain” from the agent’s “hands,” scaling APIs, and building reliable managed agents. A new introduction ...</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/blog/LiquidAI/lfm3" target="_blank" rel="noopener noreferrer">Build specialized multimodal models with LFM3</a></h3>
+  
+  <p class="article-meta">Hugging Face Blog · 10/28 01:16</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/blog/allenai/novelty-bench" target="_blank" rel="noopener noreferrer">Can we trust LLMs to judge whether a research idea is novel?</a></h3>
+  
+  <p class="article-meta">Hugging Face Blog · 10/28 00:12</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/" target="_blank" rel="noopener noreferrer">Genie 4: A new generation of world simulation</a></h3>
+  
+  <p class="article-meta">DeepMind Blog · 10/28 00:01</p>
+  <p class="article-excerpt">Genie 4: our new world model unlocking unprecedented realism in real-time simulation.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://openai.com/index/retell-ai" target="_blank" rel="noopener noreferrer">Retell uses OpenAI models to help power 100M monthly calls</a></h3>
+  
+  <p class="article-meta">OpenAI News · 10/27 23:00</p>
+  <p class="article-excerpt">GPT-6 Astra tops Retell’s voice agent benchmark, while Codex helps it reach a $1.6M annual revenue run rate per employee.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://latent.space/p/offline-coding/" target="_blank" rel="noopener noreferrer">Coding From the Himalayas With an Offline AI Agent</a></h3>
+  
+  <p class="article-meta">Latent Space · 10/27 22:41</p>
+  <p class="article-excerpt">How to set up and run an offline coding agent using OpenCode, Ollama and Qwen.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505865.html" target="_blank" rel="noopener noreferrer">不藏了！人形机器人全开源动真格，从机械结构一路拆到运动算法</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 20:57</p>
+  <p class="article-excerpt">人形机器人全套图纸开源！从关节到算法，下载就能自己造。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/10/27/1147142/industrial-intelligence-the-next-growth-opportunity-for-manufacturing/" target="_blank" rel="noopener noreferrer">Industrial Intelligence: The next growth opportunity for manufacturing</a></h3>
+  
+  <p class="article-meta">MIT Tech Review AI · 10/27 19:19</p>
+  <p class="article-excerpt">Every manufacturer has its own industrial intelligence. Some is documented, and some resides in the knowledge of experienced workers. Consider an experienced operator preparing to restart a line after a changeover. The machine settings matter, but so does knowing how a particular material behaves, w</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505852.html" target="_blank" rel="noopener noreferrer">印奇把4D雷达也端到端了</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 18:40</p>
+  <p class="article-excerpt">毫米波雷达，AI算力10TOPS</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505830.html" target="_blank" rel="noopener noreferrer">乔布斯的皮克斯，狂赞中国物理AI数据终端</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 17:54</p>
+  <p class="article-excerpt">顶尖智能汽车玩家的终局，不会停在智能汽车</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505799.html" target="_blank" rel="noopener noreferrer">Physical RSI第一站！便利店打工“人”自己进化，物理AI飞轮启动了</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 16:46</p>
+  <p class="article-excerpt">无人在环进店实测啃下长尾场景</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505773.html" target="_blank" rel="noopener noreferrer">KV Cache被压成常数！OCR开源新王：页数没上限，缓存砍96%</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 16:35</p>
+  <p class="article-excerpt">OCR 3.0时代，来了</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505719.html" target="_blank" rel="noopener noreferrer">GPT-6.1 Terra首批网友实测来了！1折价格获得Astra级电脑操作能力</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 16:27</p>
+  <p class="article-excerpt">同一天，OpenAI还甩出3项AI科学新发现</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/10/505694.html" target="_blank" rel="noopener noreferrer">国产AI 3D大模型Hi3D来了！开源可商用，PK干掉GPT-6</a></h3>
+  
+  <p class="article-meta">量子位 · 10/27 16:18</p>
+  <p class="article-excerpt">还是专业的模型做专业的事情</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="github-trending" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="github-trending" data-sub="github-trending" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://github.com/elayadesign/ai-design-skills" target="_blank" rel="noopener noreferrer">elayadesign/ai-design-skills</a></h3>
+  <p class="article-stats">★ 9,780 · 🍴 691 · 📈 1,395 stars today</p>
+  
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener noreferrer">Nutlope/hallmark</a></h3>
+  <p class="article-stats">CSS · ★ 39,313 · 🍴 2,053 · 📈 2,830 stars today</p>
+  
+  <p class="article-excerpt">Anti-AI-slop design skill for Claude Code, Cursor, and Codex.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/nightly-labs/openbot" target="_blank" rel="noopener noreferrer">nightly-labs/openbot</a></h3>
+  <p class="article-stats">TypeScript · ★ 2,613 · 🍴 262 · 📈 777 stars today</p>
+  
+  <p class="article-excerpt">A local-first desktop workspace for persistent AI teammates. Run Codex, Claude, and Grok with dedicated workspaces, task queues, file sharing, browser control, and agent-to-agent collaboration.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">obra/superpowers</a></h3>
+  <p class="article-stats">Shell · ★ 306,608 · 🍴 27,292 · 📈 617 stars today</p>
+  
+  <p class="article-excerpt">An agentic skills framework &amp; software development methodology that works.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener noreferrer">pbakaus/impeccable</a></h3>
+  <p class="article-stats">Rust · ★ 90,849 · 🍴 5,385 · 📈 1,449 stars today</p>
+  
+  <p class="article-excerpt">The design vocabulary for your coding agent. Steer with polish and bolder, review with critique and audit, catch AI slop before it ships.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/makecindy/cindy" target="_blank" rel="noopener noreferrer">makecindy/cindy</a></h3>
+  <p class="article-stats">TypeScript · ★ 7,623 · 🍴 904 · 📈 1,465 stars today</p>
+  
+  <p class="article-excerpt">Consider it done. The open-source AI agent that works out of the box · 想到，就能做到。开源、开箱即用的 AI Agent。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/gitroomhq/postiz-app" target="_blank" rel="noopener noreferrer">gitroomhq/postiz-app</a></h3>
+  <p class="article-stats">TypeScript · ★ 39,547 · 🍴 7,528 · 📈 951 stars today</p>
+  
+  <p class="article-excerpt">📨 The ultimate agentic social media scheduling tool 🤖</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener noreferrer">affaan-m/ECC</a></h3>
+  <p class="article-stats">JavaScript · ★ 291,038 · 🍴 43,086 · 📈 1,165 stars today</p>
+  
+  <p class="article-excerpt">The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener noreferrer">HKUDS/DeepTutor</a></h3>
+  <p class="article-stats">Python · ★ 46,335 · 🍴 5,794 · 📈 1,598 stars today</p>
+  
+  <p class="article-excerpt">DeepTutor: Lifelong Personalized Tutoring. https://deeptutor.info/.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/JetBrains/thinkrail" target="_blank" rel="noopener noreferrer">JetBrains/thinkrail</a></h3>
+  <p class="article-stats">TypeScript · ★ 4,221 · 🍴 224 · 📈 1,204 stars today</p>
+  
+  <p class="article-excerpt">Vibe code with pi in a lightweight, real IDE that customises itself around the way you work — The Vibe You Need</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/togg53192-cmd/jailbreaks" target="_blank" rel="noopener noreferrer">togg53192-cmd/jailbreaks</a></h3>
+  <p class="article-stats">★ 5,828 · 🍴 857 · 📈 902 stars today</p>
+  
+  <p class="article-excerpt">LIST OF ALL MY JAILBREAKS</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="trending-papers" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="huggingface-papers" data-sub="trending-papers" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.36068" target="_blank" rel="noopener noreferrer">Rollback: Experience Backtracking in World Models for Policy Improvement</a></h3>
+  <p class="article-stats">👍 41</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">Action-conditioned world models offer a scalable alternative to costly real-world interaction for improving robot policies. However, existing world-model-based methods largely treat world models as forward-only surrogates of the physical environment, leaving untapped a capability no physical environ</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.37666" target="_blank" rel="noopener noreferrer">ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning</a></h3>
+  <p class="article-stats">👍 37</p>
+  <p class="article-meta">10/27 08:00</p>
+  <p class="article-excerpt">Vision-Language-Action (VLA) models have made substantial progress in robotic manipulation, but their generalization remains constrained by the diversity and coverage of action-labeled robot demonstrations. Human videos provide much broader behavioral and environmental experience, while learning fro</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.32046" target="_blank" rel="noopener noreferrer">Can Test-Time Memory Evolution Outperform Test-Time Training for Scientific Discovery?</a></h3>
+  <p class="article-stats">👍 20</p>
+  <p class="article-meta">10/23 08:00</p>
+  <p class="article-excerpt">Recent test-time training (TTT) frameworks have enabled open-weight large language models (LLMs) to outperform inference-only frameworks powered by frontier models on scientific discovery tasks. However, TTT introduces additional computational cost for online weight updates during the discovery proc</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.22543" target="_blank" rel="noopener noreferrer">On the SPOT: Enhancing Speculative Decoding for Diffusion Language Models via Commit-Order Prediction</a></h3>
+  <p class="article-stats">👍 19</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">Diffusion language models (DLMs) promise parallel text generation, but in practice face an unresolved speed-quality trade-off. Exact decoding fills in only one masked position per model pass, while faster multi-token decoding schemes are lossy. Speculative decoding is the standard lossless accelerat</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34735" target="_blank" rel="noopener noreferrer">iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents</a></h3>
+  <p class="article-stats">👍 13</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">An agent that truly knows and acts on behalf of its user has been a long-standing promise of AI assistants. Computer-use agents bring this promise within reach by capably executing fully specified tasks across apps. However, real-world user requests are often underspecified. To act correctly for the</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.37341" target="_blank" rel="noopener noreferrer">CodeCap-Bench: Can Code Serve as a Good Video Caption?</a></h3>
+  <p class="article-stats">👍 11</p>
+  <p class="article-meta">10/27 08:00</p>
+  <p class="article-excerpt">Video captioning aims to preserve visual information through compact descriptions, predominantly using natural language. However, precisely expressing fine-grained spatial structures and temporal dynamics in natural language often leads to lengthy and potentially ambiguous descriptions. In this work</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.33624" target="_blank" rel="noopener noreferrer">RSI Arena: Towards Recursive Self-Improvement with Human Feedback</a></h3>
+  <p class="article-stats">👍 11</p>
+  <p class="article-meta">10/24 08:00</p>
+  <p class="article-excerpt">Can AI agents autonomously train useful language models and improve them using feedback from users? We introduce RSI Arena, a two-stage study of autonomous post-training as a step toward recursive self-improvement. Ten frontier models act as training agents, each starting from NVIDIA Nemotron 3.5 Li</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.33861" target="_blank" rel="noopener noreferrer">ReGE: Stronger Agents through Experience Synthesis</a></h3>
+  <p class="article-stats">👍 11</p>
+  <p class="article-meta">10/24 08:00</p>
+  <p class="article-excerpt">Repeated attempts at interactive tasks uncover facts, useful operations, and failures that can inform subsequent execution. We introduce ReGE, a framework for turning this recorded experience into guidance for a fresh attempt. Its main implementation, ReGE-Syn, uses a single coach call to jointly sy</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.37386" target="_blank" rel="noopener noreferrer">Channel Selection for Mixture-of-Experts Decoding Needs No Calibration Data</a></h3>
+  <p class="article-stats">👍 10</p>
+  <p class="article-meta">10/27 08:00</p>
+  <p class="article-excerpt">Mixture-of-Experts (MoE) models are bottlenecked by loading routed-expert weights from memory during interactive decoding at small batch sizes. Because most intermediate channels in a routed expert contribute little to any single token, channel selectors predict which channels matter and read only t</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34491" target="_blank" rel="noopener noreferrer">What Effort Level Should I Choose? On the Economics of Reasoning Effort in LLM Agents</a></h3>
+  <p class="article-stats">👍 9</p>
+  <p class="article-meta">10/25 08:00</p>
+  <p class="article-excerpt">Generative models increasingly expose a reasoning effort setting that lets users scale inference-time compute, trading higher cost for potentially improved performance. Users must choose an effort level before knowing whether extra reasoning will help, and even a successful run does not reveal wheth</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34386" target="_blank" rel="noopener noreferrer">ParetoRSI-Gym: Can AI Agents Improve Language Models Across Multiple Domains?</a></h3>
+  <p class="article-stats">👍 9</p>
+  <p class="article-meta">10/25 08:00</p>
+  <p class="article-excerpt">Recursive self-improvement (RSI) requires an agentic system to design, train, and evaluate its own successor. Data-driven post-training is a central part of that loop, yet existing evaluations measure it on a single benchmark, where an agent selects from a static pool or distills a stronger model to</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.32004" target="_blank" rel="noopener noreferrer">CRM-Agent-Bench: Benchmarking Tool-Using Agents in Stateful Enterprise Environments</a></h3>
+  <p class="article-stats">👍 9</p>
+  <p class="article-meta">10/23 08:00</p>
+  <p class="article-excerpt">Deploying language agents in real applications demands more than the right answer: an agent must execute a multi-step business process correctly, follow domain-specific rules, and interact with a user across a dialogue, where the gap between saying and doing is the gap between a satisfied customer a</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34577" target="_blank" rel="noopener noreferrer">Rethinking Verification in Agent Harnesses</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/25 08:00</p>
+  <p class="article-excerpt">Agent harnesses enable large language models to act through tools, observe the results, and iteratively work toward a task goal. Verification checks and revises agents&#39; work to improve output quality. Yet there is limited guidance on how harnesses should organize this effort. We study verification a</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.35450" target="_blank" rel="noopener noreferrer">OBB-PBD: Extending Parallel Box Decoding to Oriented Bounding Boxes for Referring Expression Grounding in Aerial Imagery</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">Referring expression grounding in overhead imagery requires oriented bounding boxes rather than horizontal ones, since aerial objects appear at arbitrary orientations. Most grounding models emit box coordinates sequentially; Parallel Box Decoding (PBD) instead predicts all geometry slots in one forw</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.35328" target="_blank" rel="noopener noreferrer">Constrained Decoding: Harmful or Beneficial? Revisiting Its Impact on LLM Performance</a></h3>
+  <p class="article-stats">👍 7</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">Constrained decoding guarantees that Large Language Models (LLMs) produce outputs conforming to predefined formats, but is often assumed to inherently degrade reasoning. We examine this assumption through a taxonomy of three constraint types: format constraints, which enforce output structure; valid</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34073" target="_blank" rel="noopener noreferrer">Memory Tax: Dissecting the Net Value of Agent Memory</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/25 08:00</p>
+  <p class="article-excerpt">Memory is increasingly used in long-horizon agents, yet the net value of building memory over direct retrieval from raw history remains largely unclear. Through a large-scale evaluation across multiple benchmarks and model backbones, we find many dedicated memory systems underperform naive RAG in ma</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.35439" target="_blank" rel="noopener noreferrer">Omni-InteractScope: Benchmarking Proactive and Agentic Interaction in Continuous Omnimodal Streams</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/26 08:00</p>
+  <p class="article-excerpt">Omnimodal large language models (Omni-LLMs) are increasingly expected to assist users while observing continuous audiovisual streams. However, existing evaluations provide limited insight into how reliably these models connect stream evidence and user needs to timely, sustained interventions. We int</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.34638" target="_blank" rel="noopener noreferrer">Intrinsic Goals for Autonomous Agents: Hierarchical Exploration Captures Future Volitional Action in Drosophila</a></h3>
+  <p class="article-stats">👍 6</p>
+  <p class="article-meta">10/25 08:00</p>
+  <p class="article-excerpt">Animals have a remarkable capacity for autonomy---driven by intrinsic motivation---without external sensory cues or extrinsic objectives, yet the computational mechanisms behind this ability largely remain a mystery. We combine whole-brain recordings in the fruit fly (Drosophila melanogaster), which</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.32177" target="_blank" rel="noopener noreferrer">Ψ-0.6: Adaptive Streams of Thought in a Unified Vision-Language World Model</a></h3>
+  <p class="article-stats">👍 5</p>
+  <p class="article-meta">10/23 08:00</p>
+  <p class="article-excerpt">Humans reason about the physical world by flexibly combining different forms of inference as a problem unfolds. Achieving this flexibility is a major open challenge in AI: capabilities often remain separated across specialized models, limiting how they can be composed and jointly adapted to a task. </p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://huggingface.co/papers/2610.33817" target="_blank" rel="noopener noreferrer">EnvLunch: The Environment as a Free Lunch for Learning to Interact</a></h3>
+  <p class="article-stats">👍 5</p>
+  <p class="article-meta">10/24 08:00</p>
+  <p class="article-excerpt">For agentic data analysis, language-model agents often require a large number of annotated tasks to learn how to interact effectively with executable environments (i.e., databases). While high-quality annotated tasks require heavy manual effort, an executable environment already provides rich intera</p>
+  
+</article>
+  </div>
+    </div>
+  </div></div>
+  </section>
+  
+  <section class="panel" data-panel="politics">
+    <p class="empty">该分类今日无内容。</p>
+  </section>
+  <section class="panel" data-panel="finance">
+    <div class="sub-content active" data-sub-content="news" data-cat="finance">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="news" data-cat="finance">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/28/jio-ipo-india-listing-.html" target="_blank" rel="noopener noreferrer">Meta- and Google-backed Jio Platforms’ shares soar over 21% on trading debut after record IPO</a></h3>
+  
+  <p class="article-meta">CNBC · 10/28 12:34</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/28/trump-jokes-5000-cash-would-buy-hamburger-and-dessert-at-mar-a-lago.html" target="_blank" rel="noopener noreferrer">Trump jokes $5,000 would buy &#39;a hamburger and maybe a small dessert&#39; at Mar-a-Lago as cost of living looms over midterms</a></h3>
+  
+  <p class="article-meta">CNBC · 10/28 12:29</p>
+  <p class="article-excerpt">Trump joked that the $5,000 payments for U.S. adults would buy little more than &quot;a hamburger and maybe a small dessert&quot; as cost of living looms over midterms.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-28/php-usd-marcos-pledges-to-do-all-we-can-to-defend-philippine-peso" target="_blank" rel="noopener noreferrer">PHP/USD: Marcos Pledges to “Do All We Can” to Defend Philippine Peso</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:28</p>
+  <p class="article-excerpt">Philippine President Ferdinand Marcos said authorities will do all they can to defend the peso as the currency weakened to a new record low this week.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-28/fortescue-says-iron-ore-deal-with-china-must-protect-australia" target="_blank" rel="noopener noreferrer">Fortescue Says Iron Ore Deal With China Must Protect Australia</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:17</p>
+  <p class="article-excerpt">Fortescue Ltd.’s top executives said the miner won’t rush into a deal with China’s state-backed iron ore buyer, and that any agreement must protect the company’s long-term interests as well as Australia’s.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-10-28/hong-kong-s-kevin-choi-on-innovation-video" target="_blank" rel="noopener noreferrer">Hong Kong&#39;s Kevin Choi on Innovation</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:15</p>
+  <p class="article-excerpt">Kevin Choi, Permanent Secretary for Innovation, Technology and Industry at the Hong Kong SAR Government, says the city needs to expand its real economy beyond the financial sector, with innovation becoming a second engine of growth. He speaks exclusively on the sidelines of the One Earth Summit in H</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-10-28/regal-s-poman-lo-on-green-investing-video" target="_blank" rel="noopener noreferrer">Regal&#39;s Poman Lo On Green Investing</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:11</p>
+  <p class="article-excerpt">Poman Lo, Founder of One Earth Summit and Vice Chairman and Managing Director at Regal Hotels Group, discusses her push for sustainability and the opportunities she sees in student housing. (Source: Bloomberg)</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/videos/2026-10-28/traders-brace-for-jio-debut-video" target="_blank" rel="noopener noreferrer">Traders Brace for Jio Debut</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:03</p>
+  <p class="article-excerpt">Traders are bracing for the Indian market debut of Jio Platforms. The listing pits Mukesh Ambani&#39;s telecom giant against a negative trend for India&#39;s megadeals amidst a challenging market environment. (Source: Bloomberg)</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-28/us-australia-pledge-to-swiftly-execute-defense-collaboration" target="_blank" rel="noopener noreferrer">US, Australia Pledge to ‘Swiftly Execute’ Defense Collaboration</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 12:03</p>
+  <p class="article-excerpt">Secretary of Defense Pete Hegseth and his Australian counterpart agreed Wednesday on the need to “swiftly execute” defense collaboration including a stronger force posture, amid growing Chinese military power in the region.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bbc.co.uk/news/articles/cwj342k62exyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Luxury cruise passengers stranded in Cambodia due to soaring fuel costs</a></h3>
+  
+  <p class="article-meta">BBC Business · 10/28 11:43</p>
+  <p class="article-excerpt">The Villa Vie Odyssey suspends its voyage and is working with passengers on &quot;temporary living arrangements&quot;.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.cnbc.com/2026/10/28/china-mbappe-football-sponsor-meme-controversy.html" target="_blank" rel="noopener noreferrer">Kylian Mbappé faces China backlash as sponsors cut ties over viral meme</a></h3>
+  
+  <p class="article-meta">CNBC · 10/28 11:33</p>
+  <p class="article-excerpt">Chinese state media has warned Kylian Mbappé that his apology over remarks referring to Mao Zedong as a dictator will be judged against his actions.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/news/articles/2026-10-28/us-friendly-nations-slash-treasury-purchases-by-60-led-by-asia" target="_blank" rel="noopener noreferrer">US-Friendly Nations Slash Treasury Purchases by 60%, Led by Asia</a></h3>
+  
+  <p class="article-meta">Bloomberg Markets · 10/28 11:21</p>
+  <p class="article-excerpt">Being one of Washington’s closest partners no longer means reliably funding the US deficit.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.ft.com/content/44c35ed7-aa46-4d45-91f5-2773f00ae6be" target="_blank" rel="noopener noreferrer">SK Hynix profits soar amid roaring AI chip demand</a></h3>
+  
+  <p class="article-meta">Financial Times · 10/28 11:06</p>
+  <p class="article-excerpt">South Korean group announces better than expected quarterly operating profit and will return $75bn to investors this year</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+  </section>
+  
+
+  <footer>
+    <span class="footer-brand">DAILY BRIEF <span>/</span> AI & FINANCE</span><p>内容来自原媒体，点击标题阅读原文。</p><p>原文聚合 · 摘录由原媒体提供 · 2026-10-28</p>
+  </footer>
+</main>
+<script>
+  function saveReading() {
+    try { localStorage.setItem('dailybrief-reading', JSON.stringify({theme:document.documentElement.dataset.theme, size:document.documentElement.dataset.size || 'standard', width:document.documentElement.dataset.width || 'narrow'})); } catch(e) {}
+  }
+  function syncThemeButtons() {
+    document.querySelectorAll('[data-theme-choice]').forEach(function(b) { b.setAttribute('aria-pressed', String(b.dataset.themeChoice === document.documentElement.dataset.theme)); });
+  }
+  syncThemeButtons();
+  document.querySelectorAll('[data-theme-choice]').forEach(function(b) { b.addEventListener('click',function(){ document.documentElement.dataset.theme=b.dataset.themeChoice; syncThemeButtons(); saveReading(); }); });
+  [['font-size','size','standard'],['reading-width','width','narrow']].forEach(function(pair) { var select=document.getElementById(pair[0]); select.value=document.documentElement.dataset[pair[1]] || pair[2]; select.addEventListener('change',function(){document.documentElement.dataset[pair[1]]=select.value;saveReading();}); });
+  document.getElementById('news-search').addEventListener('input',function(e) {
+    var query=e.target.value.trim().toLocaleLowerCase(); document.body.classList.toggle('searching',!!query); var matches=0;
+    document.querySelectorAll('.article').forEach(function(article){ var match=!query || article.textContent.toLocaleLowerCase().includes(query);article.hidden=!match;if(match)matches++; });
+    document.querySelectorAll('.panel').forEach(function(panel){panel.hidden=!!query && !Array.from(panel.querySelectorAll('.article')).some(function(article){return !article.hidden;});});
+    document.querySelector('.no-matches').hidden=!query || matches>0;
+  });
+
+  document.querySelectorAll('.tabs > .tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.dataset.tab;
+      document.querySelectorAll('.tabs > .tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.panel').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.panel === target);
+      });
+    });
+  });
+  // Scope sub-tab / source-tab toggles to the parent .panel so two L1 panels
+  // can share the same data-cat (e.g. tech main + community both data-cat=tech)
+  // without stomping on each other's active state.
+  document.querySelectorAll('.sub-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = btn.closest('.panel');
+      if (!panel) return;
+      var sub = btn.dataset.sub;
+      panel.querySelectorAll('.sub-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      panel.querySelectorAll('.sub-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.subContent === sub);
+      });
+    });
+  });
+  document.querySelectorAll('.source-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var subContent = btn.closest('.sub-content');
+      if (!subContent) return;
+      var src = btn.dataset.source;
+      subContent.querySelectorAll('.source-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      subContent.querySelectorAll('.source-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.sourceContent === src);
+      });
+    });
+  });
+  // Trading panel: asset-group sub-tabs (US/crypto/china/commodity)
+  document.querySelectorAll('.trading-group-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var grp = btn.dataset.group;
+      document.querySelectorAll('.trading-group-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.trading-group-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.group === grp);
+      });
+    });
+  });
+</script>
+</body>
+</html>
